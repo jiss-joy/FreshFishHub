@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignInActivity">
+
+    <RelativeLayout
+        android:id="@+id/sign_in_layout_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_light">
+
+        <TextView
+            android:id="@+id/sign_in_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25sp"
+            android:layout_marginTop="25sp"
+            android:fontFamily="@font/architects_daughter"
+            android:text="SIGN IN"
+            android:textColor="@color/color_black"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sign_in_tv"
+            android:layout_marginStart="25sp"
+            android:layout_marginBottom="15sp"
+            android:fontFamily="@font/architects_daughter"
+            android:text="Sign in using your registered phone number."
+            android:textColor="@color/color_black"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15sp"
+            android:src="@drawable/four" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/sign_in_layout_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/sign_in_layout_3"
+        android:layout_below="@id/sign_in_layout_1"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/sign_in_phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25sp"
+                android:background="@drawable/custom_field"
+                android:drawableStart="@drawable/phone"
+                android:ems="14"
+                android:fontFamily="@font/architects_daughter"
+                android:gravity="center"
+                android:hint="10 digit mobile number"
+                android:inputType="number"
+                android:padding="10sp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:drawableTint="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/signin_warning_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sign_in_phone_number"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="TEXT: Invalid username or Password"
+                android:textColor="#FF0000" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/sign_in_layout_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_light"
+        android:gravity="center">
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/sign_in_next_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:layout_marginBottom="15sp"
+            android:ems="14"
+            android:fontFamily="@font/architects_daughter"
+            android:gravity="center"
+            android:text="NEXT"
+            android:textColor="@color/color_White"
+            android:textStyle="bold"
+            app:backgroundTint="@color/colorPrimary"
+            app:rippleColor="@color/color_White" />
+    </LinearLayout>
+
+</RelativeLayout>

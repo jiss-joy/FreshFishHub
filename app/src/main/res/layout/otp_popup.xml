@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    app:cardCornerRadius="15sp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="15sp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/otp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_field"
+            android:ems="10"
+            android:fontFamily="@font/architects_daughter"
+            android:gravity="center"
+            android:hint="Enter OTP"
+            android:inputType="number"
+            android:padding="10sp"
+            android:textColorHint="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/otp_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:fontFamily="sans-serif"
+            android:text="We sent a SMS to +91-8111843950."
+            android:textColor="@color/colorSecondary"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/otp_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30sp"
+            android:layout_marginBottom="15sp"
+            android:ems="10"
+            android:fontFamily="@font/architects_daughter"
+            android:gravity="center"
+            android:text="SUBMIT"
+            android:textColor="@color/color_White"
+            android:textStyle="bold"
+            app:backgroundTint="@color/colorPrimary" />
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

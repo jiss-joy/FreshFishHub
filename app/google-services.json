@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1049303112838",
+    "firebase_url": "https://fresh-fish-hub-2095e.firebaseio.com",
+    "project_id": "fresh-fish-hub-2095e",
+    "storage_bucket": "fresh-fish-hub-2095e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049303112838:android:c4dfbaa1d0aecbcad00507",
+        "android_client_info": {
+          "package_name": "com.smartechBrainTechnologies.freshFishHub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1049303112838-ml4gtrocnbss692kgr57s0kedenn8e2g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smartechBrainTechnologies.freshFishHub",
+            "certificate_hash": "75ef2d9e913728d6c0f21a1596dcc571e0348fef"
+          }
+        },
+        {
+          "client_id": "1049303112838-mimjtahivuhfrbckauuuf3o9prqipdms.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQ2cgQJApJC7TxYQ5peLSfq8D6jm2rO1s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1049303112838-mimjtahivuhfrbckauuuf3o9prqipdms.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
