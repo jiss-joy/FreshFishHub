@@ -25,14 +25,16 @@
             android:hint="Enter OTP"
             android:inputType="number"
             android:padding="10sp"
-            android:textColorHint="@color/colorAccent" />
+            android:textColorHint="@color/colorSecondary" />
 
         <TextView
             android:id="@+id/otp_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="5sp"
             android:fontFamily="sans-serif"
+            android:gravity="center"
             android:text="We sent a SMS to +91-8111843950."
             android:textColor="@color/colorSecondary"
             android:textSize="14sp"

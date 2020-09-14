@@ -1,6 +1,7 @@
 package com.smartechBrainTechnologies.freshFishHub;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -25,8 +26,9 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText phoneNumber_et, email_et, name_et;
     private ExtendedFloatingActionButton next_btn;
     private TextView warning_tv;
+    private ProgressDialog mProgress;
 
-    private String phoneNumber, email, name, userType = "";
+    private String phoneNumber, email, name;
     private FirebaseFirestore db;
     private CollectionReference userRef;
 
@@ -93,6 +95,8 @@ public class SignUpActivity extends AppCompatActivity {
                     warning_tv.setText("PLEASE ENTER NAME");
                     warning_tv.setVisibility(View.VISIBLE);
                 } else {
+                    mProgress.setMessage("Verifying Number...");
+                    mProgress.show();
                     checkNumberWithDatabase();
                 }
             }
@@ -104,15 +108,26 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 boolean flag = false;
+                boolean sellerFlag = false;
                 for (DocumentSnapshot numbers : value.getDocuments()) {
                     String userPhone = numbers.getString("userPhone");
-                    if (userPhone.equals(phoneNumber)) {
+                    String userType = numbers.getString("userType");
+                    if (phoneNumber.equals(userPhone)) {
                         flag = true;
+                        if (userType.equals("Seller")) {
+                            sellerFlag = true;
+                        }
                     }
                 }
 
-                if (flag) {
-                    warning_tv.setText("A USER ALREADY EXISTS.");
+                if (flag && !sellerFlag) {
+                    mProgress.dismiss();
+                    warning_tv.setText("A USER WITH THIS NUMBER ALREADY EXISTS.\n" +
+                            "PLEASE SIGN IN");
+                    warning_tv.setVisibility(View.VISIBLE);
+                } else if (sellerFlag) {
+                    mProgress.dismiss();
+                    warning_tv.setText("PLEASE USE THE BUSINESS APP TO SIGN IN");
                     warning_tv.setVisibility(View.VISIBLE);
                 } else {
                     Intent intent = new Intent(SignUpActivity.this, VerifyOtpActivity.class);
@@ -137,6 +152,8 @@ public class SignUpActivity extends AppCompatActivity {
         next_btn = (ExtendedFloatingActionButton) findViewById(R.id.sign_up_next_btn);
         warning_tv = (TextView) findViewById(R.id.signup_warning_tv);
         warning_tv.setVisibility(View.INVISIBLE);
+        mProgress = new ProgressDialog(this);
+        mProgress.setCancelable(false);
 
         db = FirebaseFirestore.getInstance();
         userRef = db.collection("Users");

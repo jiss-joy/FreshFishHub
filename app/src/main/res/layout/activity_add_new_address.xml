@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddNewAddressActivity">
+
+    <RelativeLayout
+        android:id="@+id/add_new_address_layout_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_light">
+
+        <TextView
+            android:id="@+id/add_new_address_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25sp"
+            android:layout_marginTop="25sp"
+            android:text="ADD ADDRESS"
+            android:textAppearance="@style/TextViewFontBold"
+            android:textColor="@color/color_black"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/add_new_address_tv"
+            android:layout_marginStart="25sp"
+            android:layout_marginBottom="15sp"
+            android:text="Add a new address here."
+            android:textAppearance="@style/TextViewFontRegular"
+            android:textColor="@color/color_black"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15sp"
+            android:src="@drawable/four" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/add_new_address_layout_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/add_new_address_layout_3"
+        android:layout_below="@id/add_new_address_layout_1"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/add_new_address_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="25sp"
+                android:background="@drawable/custom_field_2"
+                android:gravity="center"
+                android:hint="Full Name"
+                android:padding="10sp"
+                android:textAppearance="@style/EditTextFont"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/add_new_address_building"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="15sp"
+                android:background="@drawable/custom_field_2"
+                android:ems="14"
+                android:gravity="center"
+                android:hint="Flat, House no., Building, Comapany, Apartment"
+                android:padding="10sp"
+                android:textAppearance="@style/EditTextFont"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/add_new_address_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="15sp"
+                android:background="@drawable/custom_field_2"
+                android:ems="14"
+                android:gravity="center"
+                android:hint="Area, Colony, Street, Village"
+                android:isScrollContainer="true"
+                android:padding="10sp"
+                android:textAppearance="@style/EditTextFont"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/add_new_address_landmark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="15sp"
+                android:background="@drawable/custom_field_2"
+                android:ems="14"
+                android:gravity="center"
+                android:hint="Landmark e.g. near Ayyappa Temple"
+                android:padding="10sp"
+                android:textAppearance="@style/EditTextFont"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/add_new_address_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="15sp"
+                android:background="@drawable/custom_field_2"
+                android:ems="14"
+                android:gravity="center"
+                android:hint="Town/City"
+                android:padding="10sp"
+                android:textAppearance="@style/EditTextFont"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/add_new_address_pin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="15sp"
+                android:background="@drawable/custom_field_2"
+                android:ems="14"
+                android:gravity="center"
+                android:hint="PIN Code"
+                android:inputType="number"
+                android:padding="10sp"
+                android:textAppearance="@style/EditTextFont"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/add_new_address_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="15sp"
+                android:background="@drawable/custom_field_2"
+                android:ems="14"
+                android:gravity="center"
+                android:hint="Kerala"
+                android:padding="10sp"
+                android:textAppearance="@style/EditTextFont"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/add_new_address_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="15sp"
+                android:background="@drawable/custom_field_2"
+                android:ems="14"
+                android:gravity="center"
+                android:hint="India"
+                android:padding="10sp"
+                android:textAppearance="@style/EditTextFont"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/add_new_address_layout_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_light"
+        android:gravity="center">
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/add_new_address_submit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:layout_marginBottom="15sp"
+            android:ems="14"
+            android:fontFamily="@font/architects_daughter"
+            android:gravity="center"
+            android:text="SUBMIT"
+            android:textColor="@color/color_White"
+            android:textStyle="bold"
+            app:backgroundTint="@color/colorPrimary"
+            app:rippleColor="@color/color_White" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4sp"
+    app:cardCornerRadius="6sp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10sp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/address_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_bold"
+            android:text="Consumer Name"
+            android:textColor="@color/color_black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/address_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10sp"
+            android:layout_toEndOf="@id/address_name"
+            android:background="@drawable/custom_field"
+            android:fontFamily="@font/ubuntu"
+            android:padding="6sp"
+            android:text="Address Status"
+            android:textColor="@color/colorPrimary"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/address_building"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/address_name"
+            android:layout_marginTop="5sp"
+            android:fontFamily="@font/ubuntu"
+            android:text="Address Building"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/address_area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/address_building"
+            android:fontFamily="@font/ubuntu"
+            android:text="Address Area"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/address_landmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/address_state"
+            android:fontFamily="@font/ubuntu"
+            android:text="Address Landmark"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/address_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/address_area"
+            android:fontFamily="@font/ubuntu"
+            android:text="Address City"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/address_pin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/address_area"
+            android:layout_marginStart="7sp"
+            android:layout_toEndOf="@id/address_city"
+            android:fontFamily="@font/ubuntu"
+            android:text="Address Pin"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/address_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/address_city"
+            android:fontFamily="@font/ubuntu"
+            android:text="Kerala,"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/address_city"
+            android:layout_marginStart="7sp"
+            android:layout_toEndOf="@id/address_state"
+            android:fontFamily="@font/ubuntu"
+            android:text="India"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/address_options_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@color/color_White"
+            android:src="@drawable/options" />
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

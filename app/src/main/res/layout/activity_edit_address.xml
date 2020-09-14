@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditAddressActivity">
+
+    <RelativeLayout
+        android:id="@+id/edit_address_layout_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_light">
+
+        <TextView
+            android:id="@+id/edit_address_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25sp"
+            android:layout_marginTop="25sp"
+            android:fontFamily="@font/architects_daughter"
+            android:text="EDIT YOUR ADDRESS"
+            android:textColor="@color/color_black"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_address_tv"
+            android:layout_marginStart="25sp"
+            android:layout_marginBottom="15sp"
+            android:fontFamily="@font/architects_daughter"
+            android:text="Edit your address here."
+            android:textColor="@color/color_black"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15sp"
+            android:src="@drawable/fishes" />
+
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:id="@+id/edit_fish_layout_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/edit_address_layout_3"
+        android:layout_below="@id/edit_address_layout_1"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edit_address_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="25sp"
+                android:background="@drawable/custom_field_2"
+                android:gravity="center"
+                android:hint="Full Name"
+                android:padding="10sp"
+                android:textAppearance="@style/EditTextFont"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edit_address_building"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="15sp"
+                android:background="@drawable/custom_field_2"
+                android:ems="14"
+                android:gravity="center"
+                android:hint="Flat, House no., Building, Comapany, Apartment"
+                android:padding="10sp"
+                android:textAppearance="@style/EditTextFont"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edit_address_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="15sp"
+                android:background="@drawable/custom_field_2"
+                android:ems="14"
+                android:gravity="center"
+                android:hint="Area, Colony, Street, Village"
+                android:isScrollContainer="true"
+                android:padding="10sp"
+                android:textAppearance="@style/EditTextFont"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edit_address_landmark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="15sp"
+                android:background="@drawable/custom_field_2"
+                android:ems="14"
+                android:gravity="center"
+                android:hint="Landmark e.g. near Ayyappa Temple"
+                android:padding="10sp"
+                android:textAppearance="@style/EditTextFont"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edit_address_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="15sp"
+                android:background="@drawable/custom_field_2"
+                android:ems="14"
+                android:gravity="center"
+                android:hint="Town/City"
+                android:padding="10sp"
+                android:textAppearance="@style/EditTextFont"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edit_address_pin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="15sp"
+                android:background="@drawable/custom_field_2"
+                android:ems="14"
+                android:gravity="center"
+                android:hint="PIN Code"
+                android:inputType="number"
+                android:padding="10sp"
+                android:textAppearance="@style/EditTextFont"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edit_address_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="15sp"
+                android:background="@drawable/custom_field_2"
+                android:ems="14"
+                android:enabled="false"
+                android:gravity="center"
+                android:hint="Kerala"
+                android:padding="10sp"
+                android:textAppearance="@style/EditTextFont"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edit_address_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="15sp"
+                android:background="@drawable/custom_field_2"
+                android:ems="14"
+                android:enabled="false"
+                android:gravity="center"
+                android:hint="India"
+                android:padding="10sp"
+                android:textAppearance="@style/EditTextFont"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/edit_address_layout_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_light"
+        android:gravity="center">
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/edit_address_edit_update_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:layout_marginBottom="15sp"
+            android:ems="8"
+            android:fontFamily="@font/architects_daughter"
+            android:gravity="center"
+            android:text="Update"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            app:backgroundTint="@color/color_White"
+            app:icon="@drawable/edit"
+            app:iconTint="@color/colorPrimary"
+            app:rippleColor="@color/colorPrimary" />
+    </LinearLayout>
+
+</RelativeLayout>

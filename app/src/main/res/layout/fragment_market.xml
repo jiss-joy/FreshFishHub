@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_white">
+
+    <include
+        android:id="@+id/market_toolbar"
+        layout="@layout/toolbar" />
+
+    <ImageView
+        android:id="@+id/market_no_fish_image"
+        android:layout_width="150sp"
+        android:layout_height="150sp"
+        android:layout_above="@id/market_no_fish_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15sp" />
+
+    <TextView
+        android:id="@+id/market_no_fish_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/ubuntu_bold"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/market_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/market_toolbar"
+        android:padding="4sp" />
+
+</RelativeLayout>

@@ -29,7 +29,44 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCQ2cgQJApJC7TxYQ5peLSfq8D6jm2rO1s"
+          "current_key": "AIzaSyAu5S2LhY5SjkpVxONEWU1vZzrX75KuwGY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1049303112838-mimjtahivuhfrbckauuuf3o9prqipdms.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049303112838:android:2313ab67c17f5a8cd00507",
+        "android_client_info": {
+          "package_name": "com.smartechbraintechnologies.freshfishbusiness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1049303112838-83tco8o93tennkcendrgrl8oe7dbhbas.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smartechbraintechnologies.freshfishbusiness",
+            "certificate_hash": "75ef2d9e913728d6c0f21a1596dcc571e0348fef"
+          }
+        },
+        {
+          "client_id": "1049303112838-mimjtahivuhfrbckauuuf3o9prqipdms.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAu5S2LhY5SjkpVxONEWU1vZzrX75KuwGY"
         }
       ],
       "services": {

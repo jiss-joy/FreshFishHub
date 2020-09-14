@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BuyFishActivity">
+
+    <RelativeLayout
+        android:id="@+id/buy_fish_layout_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_light">
+
+        <TextView
+            android:id="@+id/buy_fish_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25sp"
+            android:layout_marginTop="25sp"
+            android:fontFamily="@font/architects_daughter"
+            android:text="SET QUANTITY"
+            android:textColor="@color/color_black"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buy_fish_tv"
+            android:layout_marginStart="25sp"
+            android:layout_marginBottom="15sp"
+            android:fontFamily="@font/architects_daughter"
+            android:text="Set the quantity and place the order."
+            android:textColor="@color/color_black"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15sp"
+            android:src="@drawable/fishes" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/buy_fish_layout_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/buy_fish_layout_3"
+        android:layout_below="@id/buy_fish_layout_1"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/buy_fish_qty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="25sp"
+                android:background="@drawable/custom_field_2"
+                android:gravity="center"
+                android:hint="Quantity in Kg"
+                android:inputType="numberDecimal"
+                android:padding="10sp"
+                android:textAppearance="@style/EditTextFont"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="20sp"
+                android:text="Delivering to:" />
+
+            <TextView
+                android:id="@+id/buy_fish_no_address_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:layout_marginTop="10sp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/buy_fish_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4sp"
+                app:cardCornerRadius="6sp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10sp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/buy_fish_address_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:text="Consumer Name"
+                        android:textColor="@color/color_black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/buy_fish_address_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10sp"
+                        android:layout_toEndOf="@id/buy_fish_address_name"
+                        android:background="@drawable/custom_field"
+                        android:fontFamily="@font/ubuntu"
+                        android:padding="6sp"
+                        android:text="Address Status"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/buy_fish_address_building"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/buy_fish_address_name"
+                        android:layout_marginTop="5sp"
+                        android:fontFamily="@font/ubuntu"
+                        android:text="Address Building"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/buy_fish_address_area"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/buy_fish_address_building"
+                        android:fontFamily="@font/ubuntu"
+                        android:text="Address Area"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/buy_fish_address_landmark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/buy_fish_address_state"
+                        android:fontFamily="@font/ubuntu"
+                        android:text="Address Landmark"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/buy_fish_address_city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/buy_fish_address_area"
+                        android:fontFamily="@font/ubuntu"
+                        android:text="Address City"
+                        android:textSize="16sp" />
+
+
+                    <TextView
+                        android:id="@+id/buy_fish_address_pin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/buy_fish_address_area"
+                        android:layout_marginStart="7sp"
+                        android:layout_toEndOf="@id/buy_fish_address_city"
+                        android:fontFamily="@font/ubuntu"
+                        android:text="Address Pin"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/buy_fish_address_state"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/buy_fish_address_city"
+                        android:fontFamily="@font/ubuntu"
+                        android:text="Kerala,"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/buy_fish_address_country"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/buy_fish_address_city"
+                        android:layout_marginStart="7sp"
+                        android:layout_toEndOf="@id/buy_fish_address_state"
+                        android:fontFamily="@font/ubuntu"
+                        android:text="India"
+                        android:textSize="16sp" />
+
+                    <ImageButton
+                        android:id="@+id/buy_fish_address_options_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:backgroundTint="@color/color_White"
+                        android:src="@drawable/options" />
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/buy_fish_layout_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_light"
+        android:gravity="center">
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/buy_fish_confirm_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:layout_marginBottom="15sp"
+            android:ems="8"
+            android:fontFamily="@font/architects_daughter"
+            android:gravity="center"
+            android:text="NEXT"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            app:backgroundTint="@color/color_White"
+            app:rippleColor="@color/colorPrimary" />
+    </LinearLayout>
+
+</RelativeLayout>
