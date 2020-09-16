@@ -4,13 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4sp"
-    app:cardCornerRadius="8sp">
+    android:padding="3sp"
+    app:cardCornerRadius="6sp"
+    app:cardElevation="2sp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <com.jackandphantom.circularimageview.RoundedImage
             android:id="@+id/short_fish_details_pic"
             android:layout_width="90sp"
             android:layout_height="90sp"
@@ -30,9 +32,10 @@
                 android:id="@+id/short_fish_details_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato"
+                android:fontFamily="@font/knewave"
                 android:text="FISH NAME"
-                android:textSize="20sp"
+                android:textColor="@color/color_black"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -40,16 +43,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4sp"
-                android:fontFamily="@font/ubuntu"
-                android:text="FISH PRICE" />
-
-            <TextView
-                android:id="@+id/short_fish_details_availability"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4sp"
-                android:fontFamily="@font/ubuntu"
-                android:text="FISH AVAILABILITY"
+                android:fontFamily="@font/lato"
+                android:text="FISH PRICE"
                 android:textColor="@color/color_black" />
 
             <TextView
@@ -57,12 +52,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4sp"
-                android:fontFamily="@font/ubuntu"
+                android:fontFamily="@font/lato"
                 android:text="FISH LOCATION"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="@color/color_black" />
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/short_fish_details_availability"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10sp"
+            android:layout_marginEnd="10sp"
+            android:background="@drawable/custom_field"
+            android:fontFamily="@font/ubuntu"
+            android:padding="6sp"
+            android:text="Fish Availability"
+            android:textColor="@color/colorPrimary"
+            android:textSize="10sp" />
 
     </RelativeLayout>
 

@@ -33,7 +33,7 @@ public class AdapterShortOrder extends RecyclerView.Adapter<AdapterShortOrder.My
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Picasso.get().load(OrderList.get(position).getOrderFishImage()).into(holder.order_fish_image);
+        Picasso.get().load(OrderList.get(position).getOrderFishImage()).fit().centerCrop().into(holder.order_fish_image);
         holder.order_fish_name.setText(OrderList.get(position).getOrderFishName());
         holder.order_fish_qty.setText(OrderList.get(position).getOrderFishQty() + "KG");
         String totalPrice = String.valueOf(Float.parseFloat(OrderList.get(position).getOrderFishQty()) * Float.parseFloat(OrderList.get(position).getOrderFishPrice()));

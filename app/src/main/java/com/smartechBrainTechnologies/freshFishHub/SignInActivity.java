@@ -123,7 +123,7 @@ public class SignInActivity extends AppCompatActivity {
 
                     @Override
                     public void onVerificationFailed(@NonNull FirebaseException e) {
-                        Toast.makeText(SignInActivity.this, "Invalid OTP", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignInActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SignInActivity.this, AuthenticationBridgeActivity.class));
                     }
 
@@ -131,7 +131,7 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onCodeSent(@NonNull final String sentOTP, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                         super.onCodeSent(sentOTP, forceResendingToken);
-                        Dialog dialog = new Dialog(SignInActivity.this);
+                        final Dialog dialog = new Dialog(SignInActivity.this);
                         dialog.setContentView(R.layout.popup_otp);
                         Window window = dialog.getWindow();
                         window.setLayout(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -145,6 +145,7 @@ public class SignInActivity extends AppCompatActivity {
                                 if (userOTP.isEmpty()) {
                                     Toast.makeText(SignInActivity.this, "Please enter OTP", Toast.LENGTH_SHORT).show();
                                 } else {
+                                    dialog.dismiss();
                                     mProgress.setMessage("Authenticating...");
                                     mProgress.show();
                                     PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(sentOTP, userOTP);
@@ -182,7 +183,7 @@ public class SignInActivity extends AppCompatActivity {
 
                         } else {
                             mProgress.dismiss();
-                            Toast.makeText(SignInActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignInActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

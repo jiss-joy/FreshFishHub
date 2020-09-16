@@ -68,7 +68,7 @@ public class FullFishDetailsActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot documentSnapshot = task.getResult();
-                Picasso.get().load(documentSnapshot.getString("fishImage")).into(fish_pic);
+                Picasso.get().load(documentSnapshot.getString("fishImage")).fit().centerInside().into(fish_pic);
                 fish_name.setText(documentSnapshot.getString("fishName"));
                 fish_price.setText("₹" + documentSnapshot.getString("fishPrice") + "/Kg");
                 if (documentSnapshot.getString("fishAvailability").equals("Available")) {

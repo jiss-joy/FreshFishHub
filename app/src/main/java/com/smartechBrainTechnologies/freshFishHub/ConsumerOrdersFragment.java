@@ -56,7 +56,6 @@ public class ConsumerOrdersFragment extends Fragment {
 
         setUpToolbar();
 
-
         return view;
     }
 

@@ -7,12 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jackandphantom.circularimageview.RoundedImage;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -42,11 +42,11 @@ public class AdapterShortFishDetails extends RecyclerView.Adapter<AdapterShortFi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Picasso.get().load(FishList.get(position).getFishImage()).fit().centerCrop().into(holder.fish_image);
+        Picasso.get().load(FishList.get(position).getFishImage()).fit().into(holder.fish_image);
         holder.fish_name.setText(FishList.get(position).getFishName());
         holder.fish_price.setText("₹" + FishList.get(position).getFishPrice() + "/kg");
         if (FishList.get(position).getFishAvailability().equals("Available")) {
-            holder.fish_availability.setTextColor(Color.parseColor("#00FF0C"));
+            holder.fish_availability.setTextColor(Color.parseColor("#006400"));
         } else {
             holder.fish_availability.setTextColor(Color.parseColor("#FF0000"));
         }
@@ -103,7 +103,7 @@ public class AdapterShortFishDetails extends RecyclerView.Adapter<AdapterShortFi
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        ImageView fish_image;
+        RoundedImage fish_image;
         TextView fish_name, fish_price, fish_availability, fish_location;
         OnFishSelectedListener onFishSelectedListener;
 

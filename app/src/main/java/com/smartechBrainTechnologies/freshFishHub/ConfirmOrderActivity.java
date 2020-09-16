@@ -129,12 +129,12 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     }
 
     private void loadAddress() {
+        mProgress.setMessage("Preparing Order Summary...");
+        mProgress.setCancelable(false);
+        mProgress.show();
         addressRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                mProgress.setMessage("Preparing Order Summary...");
-                mProgress.setCancelable(false);
-                mProgress.show();
                 for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
                     if (documentSnapshot.getString("addressStatus").equals("Default")) {
                         name.setText(documentSnapshot.getString("addressName"));
@@ -144,7 +144,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                         city.setText(documentSnapshot.getString("addressCity"));
                         pin.setText(documentSnapshot.getString("addressPin"));
                         status.setText("Default");
-                        mProgress.dismiss();
+
                     }
                 }
             }
@@ -170,6 +170,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 price.setText("₹" + fishPrice);
                 qty.setText(fishQty + " KG");
                 total.setText("₹" + orderTotal);
+                mProgress.dismiss();
             }
         });
     }
