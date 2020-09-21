@@ -34,7 +34,7 @@ public class MyAddressesActivity extends AppCompatActivity implements AdapterAdd
     private RecyclerView addressRecycler;
     private ExtendedFloatingActionButton addAddressBTN;
     private ProgressDialog mProgress;
-    private TextView noAddressTV;
+    private TextView noAddressTV, toolbarTitle;
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -48,6 +48,9 @@ public class MyAddressesActivity extends AppCompatActivity implements AdapterAdd
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_addresses);
+
+        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("My Addresses");
 
         initValues();
 

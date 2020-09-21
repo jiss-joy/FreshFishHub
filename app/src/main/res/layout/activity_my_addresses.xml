@@ -7,29 +7,9 @@
     android:background="@color/blue_white"
     tools:context=".MyAddressesActivity">
 
-    <RelativeLayout
-        android:id="@+id/my_addresses_layout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary"
-        android:elevation="6sp"
-        android:padding="4sp">
-
-        <TextView
-            android:id="@+id/my_addresses_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10sp"
-            android:layout_marginTop="10sp"
-            android:layout_marginBottom="10sp"
-            android:fontFamily="@font/ubuntu_bold"
-            android:text="My Addresses"
-            android:textColor="@color/color_White"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
+    <include
+        android:id="@+id/my_address_toolbar"
+        layout="@layout/toolbar" />
 
     <TextView
         android:id="@+id/my_addresses_no_address_tv"
@@ -47,7 +27,7 @@
         android:id="@+id/my_addresses_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/my_addresses_layout1"
+        android:layout_below="@id/my_address_toolbar"
         android:padding="4sp" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

@@ -1,19 +1,16 @@
 package com.smartechBrainTechnologies.freshFishHub;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,18 +22,20 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
-public class ConsumerOrdersFragment extends Fragment {
+public class ConsumerOrdersFragment extends Fragment implements AdapterShortOrder.OnOrderClickListener {
 
     private RecyclerView consumerOrderRecycler;
-    private Toolbar toolbar;
     private ProgressDialog mProgress;
     private ImageView noOrderImage;
-    private TextView noOrderTV;
+    private TextView noOrderTV, toolbarTitle;
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -50,43 +49,39 @@ public class ConsumerOrdersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_consumer_orders, container, false);
 
+        toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("Your Orders");
+
         initValues(view);
 
         setUpRecycler();
 
-        setUpToolbar();
-
         return view;
     }
 
-    private void setUpToolbar() {
-        toolbar.inflateMenu(R.menu.menu_toolbar_market);
-        toolbar.setTitle("Your Orders");
-        Menu menu = toolbar.getMenu();
-        MenuItem menuItem = menu.findItem(R.id.search_item);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-
-        searchView.setIconifiedByDefault(false);
-        searchView.setIconified(true);
-    }
 
     private void setUpRecycler() {
         mProgress.setMessage("Please wait...");
         mProgress.show();
-        orderRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        orderRef.orderBy("orderStatus", Query.Direction.ASCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 orderList.clear();
+                Calendar calendar = Calendar.getInstance();
+                String today = DateFormat.getDateInstance().format(calendar.getTime());
                 for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
                     if (documentSnapshot.getString("orderConsumerID").equals(user.getUid())) {
-                        String fishImage = documentSnapshot.getString("orderFishImage");
-                        String fishName = documentSnapshot.getString("orderFishName");
-                        String fishPrice = documentSnapshot.getString("orderFishPrice");
-                        String fishQty = documentSnapshot.getString("orderFishQty");
-                        String orderStatus = documentSnapshot.getString("orderStatus");
+                        if (documentSnapshot.getString("orderDate").equals(today)) {
+                            String orderID = documentSnapshot.getId();
+                            String fishImage = documentSnapshot.getString("orderFishImage");
+                            String fishName = documentSnapshot.getString("orderFishName");
+                            String fishPrice = documentSnapshot.getString("orderFishPrice");
+                            String fishQty = documentSnapshot.getString("orderFishQty");
+                            String orderStatus = documentSnapshot.getString("orderStatus");
 
-                        ModelShortOrder order = new ModelShortOrder(fishImage, fishName, fishQty, fishPrice, orderStatus);
-                        orderList.add(order);
+                            ModelShortOrder order = new ModelShortOrder(orderID, fishImage, fishName, fishQty, fishPrice, orderStatus);
+                            orderList.add(order);
+                        }
                     }
                 }
                 if (orderList.isEmpty()) {
@@ -96,7 +91,7 @@ public class ConsumerOrdersFragment extends Fragment {
                 } else {
                     noOrderTV.setVisibility(View.GONE);
                     noOrderImage.setVisibility(View.GONE);
-                    mAdapter = new AdapterShortOrder(getContext(), orderList);
+                    mAdapter = new AdapterShortOrder(getContext(), orderList, ConsumerOrdersFragment.this);
                     consumerOrderRecycler.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                 }
@@ -107,7 +102,6 @@ public class ConsumerOrdersFragment extends Fragment {
 
     private void initValues(View view) {
         consumerOrderRecycler = (RecyclerView) view.findViewById(R.id.consumer_order_recycler);
-        toolbar = (Toolbar) view.findViewById(R.id.consumer_order_toolbar);
         mProgress = new ProgressDialog(getContext());
         mProgress.setCancelable(false);
         noOrderImage = (ImageView) view.findViewById(R.id.consumer_order_no_orders_image);
@@ -122,5 +116,12 @@ public class ConsumerOrdersFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         consumerOrderRecycler.setLayoutManager(linearLayoutManager);
+    }
+
+    @Override
+    public void OnOrderClick(int position) {
+        String orderID = orderList.get(position).getOrderID();
+        startActivity(new Intent(getContext(), OrderDetailsActivity.class)
+                .putExtra("ORDER ID", orderID));
     }
 }

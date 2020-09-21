@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimaryDark">#0A86E3</color>
+    <color name="colorPrimaryDark">#0026B6</color>
     <color name="colorPrimary">#0A86E3</color>
     <color name="colorSecondary">#94C1E4</color>
     <color name="colorAccent">#0026B6</color>
@@ -13,4 +13,12 @@
     <color name="color_whitesmoke">#F5F5F5</color>
     <color name="color_snow">#FFFAFA</color>
     <color name="blue_white">#E8EEF1</color>
+    <color name="transparent">#0000ffff</color>
+    <color name="color_gray">#707070</color>
+    <color name="color_light_orange">#FED8B1</color>
+    <color name="color_dark_orange">#FF4500</color>
+    <color name="color_light_red">#FFCCCB</color>
+    <color name="color_yellow">#FEDC56</color>
+    <color name="color_torquise">#40E0D0</color>
+
 </resources>

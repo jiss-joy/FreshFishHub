@@ -21,6 +21,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -41,8 +43,10 @@ public class VerifyOtpActivity extends AppCompatActivity {
 
     private String currentUserID;
     private FirebaseFirestore db;
+    private FirebaseDatabase fb;
     private FirebaseAuth mAuth;
     private CollectionReference userRef, consumerRef;
+    private DatabaseReference deviceTokenRef;
     private String mPhoneNumber, mEmail, mName, mUserType;
     private Map<String, Object> userData = new HashMap<>();
 
@@ -114,7 +118,6 @@ public class VerifyOtpActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             mProgress.setMessage("Please wait while we create your account...");
                             mProgress.show();
-                            sendWelcomeNotification();
                             updateUserDetails();
                         } else {
                             mProgress.dismiss();
@@ -125,38 +128,47 @@ public class VerifyOtpActivity extends AppCompatActivity {
     }
 
     private void updateUserDetails() {
-
+        currentUserID = mAuth.getCurrentUser().getUid();
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
             @Override
             public void onComplete(@NonNull Task<InstanceIdResult> task) {
                 String token = task.getResult().getToken();
-                currentUserID = mAuth.getCurrentUser().getUid();
-                userData.clear();
-                userData.put("userPhone", mPhoneNumber);
-                userData.put("userType", mUserType);
-                userData.put("userName", mName);
-                userData.put("userDeviceToken", token);
-                userRef.document(currentUserID).set(userData);
-
-                userData.clear();
-                userData.put("consumerID", currentUserID);
-                userData.put("consumerName", mName);
-                userData.put("consumerPhone", mPhoneNumber);
-                userData.put("consumerEmail", mEmail);
-                userData.put("consumerDeviceToken", token);
-
-                consumerRef.document(currentUserID).set(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                deviceTokenRef.child(currentUserID).child("deviceToken").setValue(token).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        finish();
-                        Toast.makeText(VerifyOtpActivity.this, "Welcome " + mName, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(VerifyOtpActivity.this, MainActivity.class));
+                        if (task.isSuccessful()){
+                            userData.clear();
+                            userData.put("userPhone", mPhoneNumber);
+                            userData.put("userType", mUserType);
+                            userData.put("userName", mName);
+                            userRef.document(currentUserID).set(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        userData.clear();
+                                        userData.put("consumerID", currentUserID);
+                                        userData.put("consumerName", mName);
+                                        userData.put("consumerPhone", mPhoneNumber);
+                                        userData.put("consumerEmail", mEmail);
+                                        consumerRef.document(currentUserID).set(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    finish();
+                                                    sendWelcomeNotification();
+                                                    Toast.makeText(VerifyOtpActivity.this, "Welcome " + mName, Toast.LENGTH_SHORT).show();
+                                                    startActivity(new Intent(VerifyOtpActivity.this, MainActivity.class));
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
                     }
                 });
             }
         });
-
-
     }
 
     private void sendWelcomeNotification() {
@@ -164,7 +176,7 @@ public class VerifyOtpActivity extends AppCompatActivity {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this, CHANNEL_ID)
                         .setSmallIcon(R.drawable.fish)
-                        .setContentTitle("Hi " + mName + "!")
+                        .setContentTitle("Hey " + mName + "!")
                         .setContentText("Welcome to the Fresh Fish Community.")
                         .setSubText("Order now and get fresh fish delivered right to you door!.")
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
@@ -183,10 +195,11 @@ public class VerifyOtpActivity extends AppCompatActivity {
         mProgress = new ProgressDialog(this);
 
         db = FirebaseFirestore.getInstance();
+        fb = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
         userRef = db.collection("Users");
         consumerRef = db.collection("Consumers");
-
+        deviceTokenRef = fb.getReference().child("Device Tokens");
     }
 
     @Override

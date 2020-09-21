@@ -2,6 +2,7 @@ package com.smartechBrainTechnologies.freshFishHub;
 
 public class ModelShortOrder {
 
+    private String orderID;
     private String orderFishImage;
     private String orderFishName;
     private String orderFishQty;
@@ -11,12 +12,18 @@ public class ModelShortOrder {
     public ModelShortOrder() {
     }
 
-    public ModelShortOrder(String orderFishImage, String orderFishName, String orderFishQty, String orderFishPrice, String orderStatus) {
+    public ModelShortOrder(String orderID, String orderFishImage, String orderFishName, String orderFishQty, String orderFishPrice, String orderStatus) {
+        this.orderID = orderID;
         this.orderFishImage = orderFishImage;
         this.orderFishName = orderFishName;
         this.orderFishQty = orderFishQty;
         this.orderFishPrice = orderFishPrice;
         this.orderStatus = orderStatus;
+    }
+
+
+    public String getOrderID() {
+        return orderID;
     }
 
     public String getOrderFishImage() {

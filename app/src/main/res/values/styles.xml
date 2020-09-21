@@ -28,4 +28,14 @@
     <style name="EditTextFont">
         <item name="android:fontFamily">@font/lato</item>
     </style>
+
+    <style name="ButtonStlye123">
+        <item name="android:textSize">19dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textColor">@color/color_White</item>
+
+        <item name="android:background">@drawable/custom_field_2</item>
+    </style>
+
 </resources>

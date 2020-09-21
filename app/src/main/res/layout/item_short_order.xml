@@ -8,64 +8,78 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="4sp">
 
-        <ImageView
+        <com.jackandphantom.circularimageview.RoundedImage
             android:id="@+id/short_order_pic"
-            android:layout_width="90sp"
-            android:layout_height="90sp"
+            android:layout_width="70sp"
+            android:layout_height="70sp"
             android:layout_centerVertical="true"
-            android:layout_margin="8sp"
+            android:layout_margin="2sp"
             android:src="@drawable/default_fish" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/short_order_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_margin="10sp"
+            android:layout_marginStart="4sp"
+            android:layout_marginTop="5sp"
             android:layout_toEndOf="@id/short_order_pic"
-            android:orientation="vertical">
+            android:fontFamily="@font/lato"
+            android:text="FISH NAME"
+            android:textColor="@color/color_black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/short_order_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lato"
-                android:text="FISH NAME"
-                android:textColor="@color/color_black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/short_order_qty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/short_order_name"
+            android:layout_marginStart="4sp"
+            android:layout_marginTop="4sp"
+            android:layout_toEndOf="@id/short_order_pic"
+            android:text="FISH QTY" />
 
-            <TextView
-                android:id="@+id/short_order_qty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4sp"
-                android:text="FISH QTY" />
+        <TextView
+            android:id="@+id/short_order_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/short_order_name"
+            android:layout_marginStart="5sp"
+            android:layout_marginTop="4sp"
+            android:layout_toEndOf="@id/short_order_qty"
+            android:text="PRICE" />
 
-            <TextView
-                android:id="@+id/short_order_total_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4sp"
-                android:text="TOTAL PRICE" />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/short_order_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/short_order_qty"
+            android:layout_marginStart="5sp"
+            android:layout_marginTop="4sp"
+            android:layout_marginBottom="5sp"
+            android:layout_toEndOf="@id/short_order_pic"
+            android:text="TOTAL PRICE"
+            android:textColor="@color/color_black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/short_order_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10sp"
+            android:layout_marginTop="10sp"
             android:layout_marginEnd="10sp"
             android:background="@drawable/custom_field"
+            android:ems="5"
             android:fontFamily="@font/ubuntu"
+            android:gravity="center"
             android:padding="6sp"
             android:text="Order Status"
-            android:textColor="@color/colorPrimary"
-            android:textSize="10sp" />
+            android:textColor="@color/colorPrimary" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

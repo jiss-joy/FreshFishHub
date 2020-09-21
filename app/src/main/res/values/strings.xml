@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Fresh Fish Hub</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="order_placed">This order has been placed with the hub.</string>
+    <string name="order_accepted">This order has been accepted by the hub.</string>
+    <string name="order_declined">This order has been declined by the hub.</string>
+    <string name="order_delivery">This order is out for delivery.</string>
+    <string name="order_delivered">This order has been delivered to you.</string>
+    <string name="order_cancelled">This order has been cancelled by you.</string>
 </resources>

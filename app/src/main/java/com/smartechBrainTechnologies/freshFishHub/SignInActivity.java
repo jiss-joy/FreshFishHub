@@ -21,9 +21,10 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -44,10 +45,12 @@ public class SignInActivity extends AppCompatActivity {
 
     private String phoneNumber;
     private FirebaseFirestore db;
+    private FirebaseDatabase fb;
     private CollectionReference userRef;
     private CollectionReference consumerReference;
+    private DatabaseReference deviceTokenRef;
     private FirebaseAuth mAuth;
-    private FirebaseUser currentUser;
+    private String currentUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,13 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
         initValues();
+
+        phoneNumber_et.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                warning_tv.setVisibility(View.GONE);
+            }
+        });
 
         nextBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,21 +176,7 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                                    if (task.isSuccessful()) {
-                                        String token = task.getResult().getToken();
-                                        consumerReference.document(mAuth.getCurrentUser().getUid()).update("consumerDeviceToken", token);
-                                        userRef.document(mAuth.getCurrentUser().getUid()).update("userDeviceToken", token);
-                                        mProgress.dismiss();
-                                        Toast.makeText(SignInActivity.this, "Welcome back", Toast.LENGTH_SHORT).show();
-                                        finish();
-                                        startActivity(new Intent(SignInActivity.this, MainActivity.class));
-                                    }
-                                }
-                            });
-
+                            updateData();
                         } else {
                             mProgress.dismiss();
                             Toast.makeText(SignInActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -189,11 +185,34 @@ public class SignInActivity extends AppCompatActivity {
                 });
     }
 
+    private void updateData() {
+        currentUserID = mAuth.getCurrentUser().getUid();
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (task.isSuccessful()) {
+                    String token = task.getResult().getToken();
+                    deviceTokenRef.child(currentUserID).child("deviceToken").setValue(token).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                mProgress.dismiss();
+                                Toast.makeText(SignInActivity.this, "Welcome back", Toast.LENGTH_SHORT).show();
+                                finish();
+                                startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
     private void initValues() {
         phoneNumber_et = (EditText) findViewById(R.id.sign_in_phone_number);
         nextBTN = (ExtendedFloatingActionButton) findViewById(R.id.sign_in_next_btn);
         warning_tv = (TextView) findViewById(R.id.signin_warning_tv);
-        warning_tv.setVisibility(View.INVISIBLE);
+        warning_tv.setVisibility(View.GONE);
         mProgress = new ProgressDialog(this);
         mProgress.setCancelable(false);
 
@@ -201,5 +220,7 @@ public class SignInActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         userRef = db.collection("Users");
         consumerReference = db.collection("Consumers");
+        fb = FirebaseDatabase.getInstance();
+        deviceTokenRef = fb.getReference().child("Device Tokens");
     }
 }

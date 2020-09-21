@@ -6,51 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".AddNewAddressActivity">
 
-    <RelativeLayout
-        android:id="@+id/add_new_address_layout_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_light">
 
-        <TextView
-            android:id="@+id/add_new_address_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25sp"
-            android:layout_marginTop="25sp"
-            android:text="ADD ADDRESS"
-            android:textAppearance="@style/TextViewFontBold"
-            android:textColor="@color/color_black"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/add_new_address_tv"
-            android:layout_marginStart="25sp"
-            android:layout_marginBottom="15sp"
-            android:text="Add a new address here."
-            android:textAppearance="@style/TextViewFontRegular"
-            android:textColor="@color/color_black"
-            android:textSize="12sp" />
-
-        <ImageView
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="15sp"
-            android:src="@drawable/four" />
-
-    </RelativeLayout>
+    <include
+        android:id="@+id/add_new_address_toolbar"
+        layout="@layout/toolbar" />
 
     <ScrollView
         android:id="@+id/add_new_address_layout_2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/add_new_address_layout_3"
-        android:layout_below="@id/add_new_address_layout_1"
+        android:layout_below="@id/add_new_address_toolbar"
         android:fillViewport="true"
         android:scrollbars="vertical">
 
@@ -206,7 +172,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/color_light"
+        android:background="@color/colorPrimary"
         android:gravity="center">
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -215,7 +181,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15sp"
             android:layout_marginBottom="15sp"
-            android:ems="14"
             android:fontFamily="@font/architects_daughter"
             android:gravity="center"
             android:text="SUBMIT"

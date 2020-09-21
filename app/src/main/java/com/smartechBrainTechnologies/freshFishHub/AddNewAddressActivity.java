@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ public class AddNewAddressActivity extends AppCompatActivity {
             addressPin, addressState, addressCountry;
     private ExtendedFloatingActionButton submitBTN;
     private ProgressDialog mProgress;
+    private TextView toolbarTitle;
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -44,6 +46,9 @@ public class AddNewAddressActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_address);
+
+        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("Add Address");
 
         initValues();
 

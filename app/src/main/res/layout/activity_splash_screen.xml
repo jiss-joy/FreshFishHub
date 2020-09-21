@@ -6,9 +6,20 @@
     tools:context=".SplashScreenActivity">
 
     <ImageView
-        android:layout_width="180sp"
-        android:layout_height="180sp"
+        android:id="@+id/splash_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:src="@drawable/fish" />
+        android:src="@drawable/main_logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20sp"
+        android:text="In Association with M4 Men's and Boys"
+        android:textColor="@color/color_black"
+        android:textSize="16sp" />
 
 </RelativeLayout>

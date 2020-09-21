@@ -5,78 +5,181 @@
     android:layout_height="match_parent"
     android:background="@color/blue_white">
 
-    <RelativeLayout
-        android:id="@+id/profile_layout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary"
-        android:elevation="6sp"
-        android:padding="4sp">
-
-        <TextView
-            android:id="@+id/profile_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10sp"
-            android:layout_marginTop="10sp"
-            android:fontFamily="@font/ubuntu_bold"
-            android:text="User Name"
-            android:textColor="@color/color_White"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/profile_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profile_name"
-            android:layout_marginStart="10sp"
-            android:layout_marginTop="10sp"
-            android:text="+91-1234567890"
-            android:textColor="@color/color_White"
-            android:textStyle="normal" />
-
-        <TextView
-            android:id="@+id/profile_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profile_number"
-            android:layout_marginStart="10sp"
-            android:layout_marginTop="10sp"
-            android:layout_marginBottom="10sp"
-            android:text="smartechbraintechnologies@gmail.com"
-            android:textColor="@color/color_White"
-            android:textStyle="normal" />
-
-
-        <TextView
-            android:id="@+id/profile_edit_btn"
-            android:layout_width="60sp"
-            android:layout_height="50sp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:text="Edit"
-            android:textColor="@color/color_White"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
+    <include
+        android:id="@+id/profile_toolbar"
+        layout="@layout/toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/profile_layout1">
+        android:layout_below="@id/profile_toolbar">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blue_white">
+            android:background="@color/blue_white"
+            android:padding="10sp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/profile_details_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6sp"
+                app:cardCornerRadius="6sp"
+                app:cardElevation="3sp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/details_tv1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10sp"
+                        android:layout_marginTop="15sp"
+                        android:layout_marginBottom="10sp"
+                        android:text="Details"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <ImageButton
+                        android:id="@+id/profile_edit_btn"
+                        android:layout_width="50sp"
+                        android:layout_height="50sp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginEnd="10sp"
+                        android:background="@color/color_White"
+                        android:src="@drawable/edit" />
+
+                    <View
+                        android:id="@+id/profile_view_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@id/details_tv1"
+                        android:layout_marginHorizontal="10sp"
+                        android:layout_marginTop="5sp"
+                        android:background="@color/blue_white" />
+
+                    <TextView
+                        android:id="@+id/details_tv2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/profile_view_1"
+                        android:layout_marginStart="10sp"
+                        android:layout_marginTop="15sp"
+                        android:layout_marginBottom="10sp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:text="Name"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/profile_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/profile_view_1"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="15sp"
+                        android:layout_marginEnd="10sp"
+                        android:layout_marginBottom="10sp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:text="Name"
+                        android:textColor="@color/color_gray"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:id="@+id/profile_view_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@id/details_tv2"
+                        android:layout_marginHorizontal="10sp"
+                        android:layout_marginTop="5sp"
+                        android:background="@color/blue_white" />
+
+
+                    <TextView
+                        android:id="@+id/details_tv3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/profile_view_2"
+                        android:layout_marginStart="10sp"
+                        android:layout_marginTop="15sp"
+                        android:layout_marginBottom="15sp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:text="Phone"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/profile_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/profile_view_2"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="15sp"
+                        android:layout_marginEnd="10sp"
+                        android:layout_marginBottom="15sp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:text="Phone"
+                        android:textColor="@color/color_gray"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:id="@+id/profile_view_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@id/details_tv3"
+                        android:layout_marginHorizontal="10sp"
+                        android:layout_marginTop="5sp"
+                        android:background="@color/blue_white" />
+
+
+                    <TextView
+                        android:id="@+id/details_tv4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/profile_view_3"
+                        android:layout_marginStart="10sp"
+                        android:layout_marginTop="15sp"
+                        android:layout_marginBottom="15sp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:text="Email"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/profile_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/profile_view_3"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="15sp"
+                        android:layout_marginEnd="10sp"
+                        android:layout_marginBottom="15sp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:text="Email"
+                        android:textColor="@color/color_gray"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/account_setting_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/profile_details_card"
                 android:layout_margin="6sp"
                 app:cardCornerRadius="6sp"
                 app:cardElevation="3sp">
@@ -113,10 +216,10 @@
                         android:layout_marginTop="15sp"
                         android:layout_marginBottom="10sp"
                         android:clickable="true"
-                        android:textSize="16sp"
                         android:focusable="true"
                         android:text="My Adresses"
-                        android:textColor="@color/colorPrimary" />
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -136,8 +239,8 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:text="Past Orders"
-                        android:textSize="16sp"
-                        android:textColor="@color/colorPrimary" />
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
@@ -169,26 +272,6 @@
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_marginTop="5sp"
-                        android:background="@color/blue_white" />
-
-                    <TextView
-                        android:id="@+id/profile_help_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10sp"
-                        android:layout_marginTop="15sp"
-                        android:layout_marginBottom="10sp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:text="Help"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="16sp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -314,12 +397,22 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/profile_version"
+                android:id="@+id/profile_ad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/profile_log_out_card"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="6sp"
+                android:text="Developed by Smartech Brain Technologies"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/profile_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_ad"
+                android:layout_centerHorizontal="true"
                 android:text="VERSION 1.0.0"
                 android:textColor="@color/colorPrimary"
                 android:textSize="15sp" />
@@ -334,6 +427,7 @@
                 android:text="User ID: no0p2kyTf0SFC0qR3fVtK1uLg8w2"
                 android:textColor="@color/colorPrimary"
                 android:textSize="15sp" />
+
 
         </RelativeLayout>
 

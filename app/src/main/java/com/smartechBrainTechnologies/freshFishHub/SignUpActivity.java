@@ -151,7 +151,7 @@ public class SignUpActivity extends AppCompatActivity {
         name_et = (EditText) findViewById(R.id.sign_up_name);
         next_btn = (ExtendedFloatingActionButton) findViewById(R.id.sign_up_next_btn);
         warning_tv = (TextView) findViewById(R.id.signup_warning_tv);
-        warning_tv.setVisibility(View.INVISIBLE);
+        warning_tv.setVisibility(View.GONE);
         mProgress = new ProgressDialog(this);
         mProgress.setCancelable(false);
 

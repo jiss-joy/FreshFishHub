@@ -1,9 +1,6 @@
 package com.smartechBrainTechnologies.freshFishHub;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -11,18 +8,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final static int ID_MARKET = 1;
+    private final static int ID_ORDERS = 2;
+    private final static int ID_PROFILE = 3;
+
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
+    private MeowBottomNavigation meowBottomNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +30,47 @@ public class MainActivity extends AppCompatActivity {
 
         initValues();
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+        meowBottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.market));
+        meowBottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.orders));
+        meowBottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.username));
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MarketFragment()).commit();
+
+        meowBottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
+            @Override
+            public void onClickItem(MeowBottomNavigation.Model item) {
+
+            }
+        });
+
+        meowBottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
+            @Override
+            public void onShowItem(MeowBottomNavigation.Model item) {
+                Fragment selectedFragment = null;
+                switch (item.getId()) {
+                    case ID_MARKET:
+                        selectedFragment = new MarketFragment();
+                        break;
+                    case ID_ORDERS:
+                        selectedFragment = new ConsumerOrdersFragment();
+                        break;
+                    case ID_PROFILE:
+                        selectedFragment = new ProfileFragment();
+                        break;
+                }
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+            }
+        });
+
+        meowBottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
+            @Override
+            public void onReselectItem(MeowBottomNavigation.Model item) {
+            }
+        });
+
+//        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+//        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MarketFragment()).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
@@ -76,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
     private void initValues() {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+        meowBottomNavigation = (MeowBottomNavigation) findViewById(R.id.bottom_navigation);
     }
 
     @Override

@@ -6,52 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".EditAddressActivity">
 
-    <RelativeLayout
-        android:id="@+id/edit_address_layout_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_light">
-
-        <TextView
-            android:id="@+id/edit_address_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25sp"
-            android:layout_marginTop="25sp"
-            android:fontFamily="@font/architects_daughter"
-            android:text="EDIT YOUR ADDRESS"
-            android:textColor="@color/color_black"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/edit_address_tv"
-            android:layout_marginStart="25sp"
-            android:layout_marginBottom="15sp"
-            android:fontFamily="@font/architects_daughter"
-            android:text="Edit your address here."
-            android:textColor="@color/color_black"
-            android:textSize="13sp" />
-
-        <ImageView
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="15sp"
-            android:src="@drawable/fishes" />
-
-    </RelativeLayout>
-
+    <include
+        android:id="@+id/edit_address_toolbar"
+        layout="@layout/toolbar" />
 
     <ScrollView
         android:id="@+id/edit_fish_layout_2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/edit_address_layout_3"
-        android:layout_below="@id/edit_address_layout_1"
+        android:layout_below="@id/edit_address_toolbar"
         android:fillViewport="true"
         android:scrollbars="vertical">
 

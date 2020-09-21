@@ -4,126 +4,91 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_White"
+    android:background="@drawable/bk345"
     tools:context=".AuthenticationBridgeActivity">
 
-    <RelativeLayout
-        android:id="@+id/layout_1"
+
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/layout_2"
-        android:background="@color/color_light">
+        android:layout_margin="40sp"
+        android:layout_above="@id/auth_card"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/main_logo" />
 
-        <ImageView
-            android:layout_width="70sp"
-            android:layout_height="70sp"
-            android:layout_above="@id/fresh_tv"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15sp"
-            android:src="@drawable/seafish" />
-
-        <TextView
-            android:id="@+id/fresh_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:fontFamily="@font/architects_daughter"
-            android:text="FRESH"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="40sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/fish_hub_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fresh_tv"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="@font/architects_daughter"
-            android:text="FISH HUB"
-            android:textColor="@color/colorPrimary"
-            android:textSize="40sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:layout_below="@id/fish_hub_tv"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15sp"
-            android:src="@drawable/five" />
-
-    </RelativeLayout>
-
-
-    <LinearLayout
-        android:id="@+id/layout_2"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/auth_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_marginHorizontal="20sp"
+        android:layout_marginBottom="20sp"
+        app:cardCornerRadius="20sp"
+        app:cardElevation="3sp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25sp"
-            android:fontFamily="@font/architects_daughter"
-            android:text="ACCOUNT"
-            android:textColor="@color/color_black"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10sp"
-            android:fontFamily="@font/architects_daughter"
-            android:text="Sign In or Sign Up with phone to continue."
-            android:textColor="@color/color_black"
-            android:textSize="16sp" />
-
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/auth_sign_in"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="35sp"
-            android:fontFamily="@font/architects_daughter"
             android:gravity="center"
-            android:text="EXISTING USER? SIGN IN"
-            android:textColor="@color/color_White"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:backgroundTint="@color/colorPrimary"
-            app:rippleColor="@color/color_White" />
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
-            android:layout_marginBottom="10sp"
-            android:fontFamily="@font/architects_daughter"
-            android:text="OR"
-            android:textColor="@color/color_black"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25sp"
+                android:text="ACCOUNT"
+                android:textColor="@color/color_black"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="10sp"
+                android:paddingHorizontal="10sp"
+                android:text="Sign In or Sign Up to continue."
+                android:textColor="@color/color_black"
+                android:textSize="16sp" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/auth_sign_in"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="35sp"
+                android:layout_marginTop="10sp"
+                android:backgroundTint="@color/colorPrimary"
+                android:gravity="center"
+                android:text="EXISTING USER? SIGN IN"
+                android:textColor="@color/color_White"
+                android:textStyle="bold"
+                app:rippleColor="@color/color_White" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="10sp"
+                android:text="OR"
+                android:textColor="@color/color_black"
+                android:textStyle="bold" />
 
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/auth_sign_up"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="35sp"
-            android:layout_marginBottom="25sp"
-            android:fontFamily="@font/architects_daughter"
-            android:gravity="center"
-            android:text="NEW USER? SIGN UP"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:backgroundTint="@color/color_White"
-            app:rippleColor="@color/color_White" />
-    </LinearLayout>
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/auth_sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="35sp"
+                android:layout_marginBottom="25sp"
+                android:gravity="center"
+                android:text="NEW USER? SIGN UP"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                app:backgroundTint="@color/color_White"
+                app:rippleColor="@color/color_White" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 </RelativeLayout>

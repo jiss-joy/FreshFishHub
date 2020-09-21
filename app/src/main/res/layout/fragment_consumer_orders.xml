@@ -7,29 +7,38 @@
         android:id="@+id/consumer_order_toolbar"
         layout="@layout/toolbar" />
 
-    <ImageView
-        android:id="@+id/consumer_order_no_orders_image"
-        android:layout_width="150sp"
-        android:layout_height="150sp"
-        android:layout_above="@id/consumer_order_no_orders_tv"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15sp" />
-
-    <TextView
-        android:id="@+id/consumer_order_no_orders_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:fontFamily="@font/ubuntu_bold"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/consumer_order_recycler"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/consumer_order_toolbar"
-        android:padding="4sp" />
+        android:layout_below="@id/consumer_order_toolbar">
+
+        <ImageView
+            android:id="@+id/consumer_order_no_orders_image"
+            android:layout_width="150sp"
+            android:layout_height="150sp"
+            android:layout_above="@id/consumer_order_no_orders_tv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15sp" />
+
+        <TextView
+            android:id="@+id/consumer_order_no_orders_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:textColor="@color/color_black"
+            android:textSize="20sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/consumer_order_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="4sp"
+            android:paddingTop="10sp"
+            android:paddingEnd="4sp" />
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

@@ -45,13 +45,6 @@ public class AdapterShortFishDetails extends RecyclerView.Adapter<AdapterShortFi
         Picasso.get().load(FishList.get(position).getFishImage()).fit().into(holder.fish_image);
         holder.fish_name.setText(FishList.get(position).getFishName());
         holder.fish_price.setText("₹" + FishList.get(position).getFishPrice() + "/kg");
-        if (FishList.get(position).getFishAvailability().equals("Available")) {
-            holder.fish_availability.setTextColor(Color.parseColor("#006400"));
-        } else {
-            holder.fish_availability.setTextColor(Color.parseColor("#FF0000"));
-        }
-        holder.fish_availability.setText(FishList.get(position).getFishAvailability());
-        holder.fish_location.setText(FishList.get(position).getFishLocation());
     }
 
     @Override
@@ -104,7 +97,7 @@ public class AdapterShortFishDetails extends RecyclerView.Adapter<AdapterShortFi
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         RoundedImage fish_image;
-        TextView fish_name, fish_price, fish_availability, fish_location;
+        TextView fish_name, fish_price;
         OnFishSelectedListener onFishSelectedListener;
 
         public MyViewHolder(@NonNull View itemView, OnFishSelectedListener onFishSelectedListener) {
@@ -112,8 +105,6 @@ public class AdapterShortFishDetails extends RecyclerView.Adapter<AdapterShortFi
             fish_image = itemView.findViewById(R.id.short_fish_details_pic);
             fish_name = itemView.findViewById(R.id.short_fish_details_name);
             fish_price = itemView.findViewById(R.id.short_fish_details_price);
-            fish_availability = itemView.findViewById(R.id.short_fish_details_availability);
-            fish_location = itemView.findViewById(R.id.short_fish_details_location);
             this.onFishSelectedListener = onFishSelectedListener;
 
             itemView.setOnClickListener(this);

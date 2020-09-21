@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchEngineActivity">
+
+    <com.arlib.floatingsearchview.FloatingSearchView
+        android:id="@+id/floating_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
+        android:layout_marginTop="25sp"
+        app:floatingSearch_backgroundColor="@color/colorSecondary"
+        app:floatingSearch_close_search_on_keyboard_dismiss="true"
+        app:floatingSearch_dimBackground="false"
+        app:floatingSearch_dismissOnOutsideTouch="true"
+        app:floatingSearch_hintTextColor="@color/color_White"
+        app:floatingSearch_leftActionColor="@color/color_White"
+        app:floatingSearch_leftActionMode="showSearch"
+        app:floatingSearch_menuItemIconColor="@color/colorPrimary"
+        app:floatingSearch_searchHint="Search Fishes..."
+        app:floatingSearch_suggestionRightIconColor="@color/color_White"
+        app:floatingSearch_suggestionsListAnimDuration="250"
+        app:floatingSearch_viewSearchInputTextColor="@color/color_White">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60sp" />
+
+
+    </com.arlib.floatingsearchview.FloatingSearchView>
+
+
+</RelativeLayout>

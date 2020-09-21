@@ -7,11 +7,16 @@
     android:background="@color/blue_white"
     tools:context=".ConfirmOrderActivity">
 
+    <include
+        android:id="@+id/confirm_order_toolbar"
+        layout="@layout/toolbar" />
+
     <ScrollView
         android:id="@+id/buy_fish_layout_2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/confirm_order_layout_3"
+        android:layout_below="@id/confirm_order_toolbar"
         android:fillViewport="true"
         android:scrollbars="vertical">
 
@@ -25,9 +30,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10sp"
                 android:layout_marginTop="20sp"
-                android:text="ORDER SUMMARY"
+                android:text="ORDER DETAILS"
                 android:textAppearance="@style/TextViewFontRegular"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -147,11 +152,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10sp"
                 android:layout_marginTop="20sp"
-                android:text="Delivering to:"
+                android:text="DELIVERING TO:"
+                android:textSize="16sp"
                 android:textAppearance="@style/TextViewFontRegular" />
 
+            <TextView
+                android:id="@+id/confirm_order_no_address_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:layout_marginTop="10sp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
             <androidx.cardview.widget.CardView
-                android:id="@+id/confirm_order_address"
+                android:id="@+id/confirm_order_address_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4sp"
@@ -254,6 +271,15 @@
                         android:text="India"
                         android:textAppearance="@style/TextViewFontRegular"
                         android:textSize="16sp" />
+
+                    <ImageButton
+                        android:id="@+id/confirm_order_address_options_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:backgroundTint="@color/color_White"
+                        android:src="@drawable/options" />
 
                 </RelativeLayout>
 
