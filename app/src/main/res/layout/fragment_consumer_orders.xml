@@ -14,18 +14,20 @@
 
         <ImageView
             android:id="@+id/consumer_order_no_orders_image"
-            android:layout_width="150sp"
-            android:layout_height="150sp"
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
             android:layout_above="@id/consumer_order_no_orders_tv"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15sp" />
+            android:layout_marginBottom="10sp"
+            android:src="@drawable/empty_order" />
 
         <TextView
             android:id="@+id/consumer_order_no_orders_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:fontFamily="@font/lato"
+            android:layout_marginHorizontal="3sp"
+            android:fontFamily="@font/ubuntu"
             android:gravity="center"
             android:textColor="@color/color_black"
             android:textSize="20sp" />

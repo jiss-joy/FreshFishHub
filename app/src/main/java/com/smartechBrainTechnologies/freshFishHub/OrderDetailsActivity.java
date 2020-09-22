@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -34,7 +36,7 @@ import java.util.Map;
 public class OrderDetailsActivity extends AppCompatActivity {
     private TextView toolbarTitle, orderStatusLong, orderStatusShort, order_ID, time, fName, fPrice, fQty,
             totalPrice, name, building, area, city, pin, landmark;
-    private ExtendedFloatingActionButton cancelBTN, deliverBTN;
+    private LinearLayout cancelBTN, deliverBTN;
     private ProgressDialog mProgress;
 
     private FirebaseFirestore db;
@@ -43,6 +45,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private CollectionReference addressRef;
     private CollectionReference orderRef;
+    private DatabaseReference notificationRef;
 
     private String orderID, userDeliveryCode;
     private Map<String, Object> orderDetails = new HashMap<>();
@@ -65,7 +68,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         cancelBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelOrder();
+                confirmCancellations();
             }
         });
 
@@ -75,6 +78,33 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 getDeliveryCode();
             }
         });
+    }
+
+    private void confirmCancellations() {
+
+        final Dialog dialog = new Dialog(OrderDetailsActivity.this);
+        dialog.setContentView(R.layout.popup_order_cancellation);
+        Window window = dialog.getWindow();
+        window.setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        ExtendedFloatingActionButton confirm_btn = (ExtendedFloatingActionButton) dialog.findViewById(R.id.confirm_cancel_confirm);
+        ExtendedFloatingActionButton cancel_btn = (ExtendedFloatingActionButton) dialog.findViewById(R.id.confirm_cancel_cancel);
+        confirm_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                mProgress.setMessage("Cancelling Order...");
+                mProgress.show();
+                cancelOrder();
+            }
+        });
+        cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
     }
 
     private void getDeliveryCode() {
@@ -113,6 +143,11 @@ public class OrderDetailsActivity extends AppCompatActivity {
                         orderRef.document(orderID).update(orderDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+                                HashMap<String, String> orderNotification = new HashMap<>();
+                                orderNotification.put("senderID", currentUser.getUid());
+                                orderNotification.put("notificationType", "orderDelivered");
+                                notificationRef.child("Placed Notifications").child(currentUser.getUid()).push().setValue(orderNotification);
+
                                 cancelBTN.setVisibility(View.GONE);
                                 deliverBTN.setVisibility(View.GONE);
                                 if (type.equals("Normal")) {
@@ -137,6 +172,19 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private void cancelOrder() {
         orderDetails.put("orderStatus", "Cancelled");
         orderRef.document(orderID).update(orderDetails);
+        orderRef.document(orderID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    String sellerID = task.getResult().getString("orderSellerID");
+                    HashMap<String, String> orderNotification = new HashMap<>();
+                    orderNotification.put("senderID", currentUser.getUid());
+                    orderNotification.put("notificationType", "orderCancelled");
+                    notificationRef.child("Cancelled Notifications").child(sellerID).push().setValue(orderNotification);
+                    mProgress.dismiss();
+                }
+            }
+        });
         cancelBTN.setVisibility(View.GONE);
         deliverBTN.setVisibility(View.GONE);
     }
@@ -223,7 +271,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 String total = String.valueOf(Float.parseFloat(value.getString("orderFishQty")) * Float.parseFloat(value.getString("orderFishPrice")));
                 totalPrice.setText(total);
                 order_ID.setText(value.getId());
-                time.setText(value.getString("orderDate") + "at" + value.getString("orderTime"));
+                time.setText("On " + value.getString("orderDate") + " at " + value.getString("orderTime"));
             }
         });
         mProgress.dismiss();
@@ -244,8 +292,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
         landmark = (TextView) findViewById(R.id.order_details_landmark);
         time = (TextView) findViewById(R.id.order_details_order_time);
         totalPrice = (TextView) findViewById(R.id.order_details_total);
-        cancelBTN = (ExtendedFloatingActionButton) findViewById(R.id.order_details_cancel_btn);
-        deliverBTN = (ExtendedFloatingActionButton) findViewById(R.id.order_details_deliver_btn);
+        cancelBTN = (LinearLayout) findViewById(R.id.order_details_cancel_btn);
+        deliverBTN = (LinearLayout) findViewById(R.id.order_details_deliver_btn);
         mProgress = new ProgressDialog(this);
         mProgress.setCancelable(false);
 
@@ -255,6 +303,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         currentUser = mAuth.getCurrentUser();
         addressRef = db.collection("Consumers").document(currentUser.getUid()).collection("My Addresses");
         orderRef = db.collection("Orders");
+        notificationRef = fb.getReference().child("Notifications");
     }
 
     @Override

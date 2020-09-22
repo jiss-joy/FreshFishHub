@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,9 +36,9 @@ public class MarketFragment extends Fragment implements AdapterShortFishDetails.
     private RecyclerView marketRecycler;
     private RecyclerView bestDealsRecycler;
     private ProgressDialog mProgress;
-    private ImageView noFishImage;
-    private TextView noFishTV;
     private ExtendedFloatingActionButton searchBar;
+    private ImageView noBestDeals, noNormalDeals;
+    private TextView noBestTV, noNormalTV;
 
 
     private FirebaseFirestore db;
@@ -78,6 +77,8 @@ public class MarketFragment extends Fragment implements AdapterShortFishDetails.
     }
 
     private void setUpBestDeals() {
+        mProgress.setMessage("Please wait...");
+        mProgress.show();
         bestDealsRef.orderBy("fishPostTime", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -93,13 +94,24 @@ public class MarketFragment extends Fragment implements AdapterShortFishDetails.
                     ModelBestDealsFish fishDetail = new ModelBestDealsFish(fishID, fishImage, fishName, fishOldPrice, fishNewPrice, fishAvailability);
                     bestDeals.add(fishDetail);
                 }
-                noFishTV.setVisibility(View.GONE);
-                noFishImage.setVisibility(View.GONE);
-                bAdapter = new AdapterBestDealsFish(getContext(), bestDeals, MarketFragment.this);
-                bestDealsRecycler.setAdapter(bAdapter);
-                bAdapter.notifyDataSetChanged();
+
+                if (bestDeals.isEmpty()) {
+                    Picasso.get().load(R.drawable.empty_fish).into(noBestDeals);
+                    noBestTV.setText("Oops!\nWe could not find any exciting deals.");
+                    noBestTV.setVisibility(View.VISIBLE);
+                    noBestDeals.setVisibility(View.VISIBLE);
+                    bestDealsRecycler.setVisibility(View.GONE);
+                } else {
+                    bestDealsRecycler.setVisibility(View.VISIBLE);
+                    noBestTV.setVisibility(View.GONE);
+                    noBestDeals.setVisibility(View.GONE);
+                    bAdapter = new AdapterBestDealsFish(getContext(), bestDeals, MarketFragment.this);
+                    bestDealsRecycler.setAdapter(bAdapter);
+                    bAdapter.notifyDataSetChanged();
+                }
             }
         });
+        mProgress.dismiss();
     }
 
 
@@ -121,13 +133,15 @@ public class MarketFragment extends Fragment implements AdapterShortFishDetails.
                     fishDetailsList.add(fishDetail);
                 }
                 if (fishDetailsList.isEmpty()) {
+                    Picasso.get().load(R.drawable.fishing).into(noNormalDeals);
+                    noNormalTV.setText("Hang in there!\nOur fishermen are still at sea.");
+                    noNormalDeals.setVisibility(View.VISIBLE);
+                    noNormalTV.setVisibility(View.VISIBLE);
                     marketRecycler.setVisibility(View.GONE);
-                    Picasso.get().load(R.drawable.empty_fish).into(noFishImage);
-                    noFishTV.setText("You have not posted any fishes until now\n" +
-                            "Tap the '+' button to add a new fish");
                 } else {
-                    noFishTV.setVisibility(View.GONE);
-                    noFishImage.setVisibility(View.GONE);
+                    marketRecycler.setVisibility(View.VISIBLE);
+                    noNormalDeals.setVisibility(View.GONE);
+                    noNormalTV.setVisibility(View.GONE);
                     mAdapter = new AdapterShortFishDetails(getContext(), fishDetailsList, MarketFragment.this);
                     marketRecycler.setAdapter(mAdapter);
                     marketRecycler.setVerticalFadingEdgeEnabled(false);
@@ -143,11 +157,19 @@ public class MarketFragment extends Fragment implements AdapterShortFishDetails.
     private void initValues(View view) {
         marketRecycler = (RecyclerView) view.findViewById(R.id.market_recycler);
         bestDealsRecycler = (RecyclerView) view.findViewById(R.id.best_deals_recycler);
+        marketRecycler.setVisibility(View.GONE);
+        bestDealsRecycler.setVisibility(View.GONE);
         mProgress = new ProgressDialog(getContext());
         mProgress.setCancelable(false);
-        noFishImage = (ImageView) view.findViewById(R.id.market_no_fish_image);
-        noFishTV = (TextView) view.findViewById(R.id.market_no_fish_tv);
         searchBar = (ExtendedFloatingActionButton) view.findViewById(R.id.market_search_bar);
+        noBestDeals = (ImageView) view.findViewById(R.id.market_no_best_deals_image);
+        noNormalDeals = (ImageView) view.findViewById(R.id.market_no_normal_deals_image);
+        noBestTV = (TextView) view.findViewById(R.id.market_no_best_deals_tv);
+        noNormalTV = (TextView) view.findViewById(R.id.market_no_normal_deals__tv);
+        noNormalDeals.setVisibility(View.GONE);
+        noNormalTV.setVisibility(View.GONE);
+        noBestTV.setVisibility(View.GONE);
+        noBestDeals.setVisibility(View.GONE);
 
         db = FirebaseFirestore.getInstance();
         fishPostRef = db.collection("Fish Posts");

@@ -1,16 +1,14 @@
 package com.smartechBrainTechnologies.freshFishHub;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,7 +32,7 @@ import java.util.Map;
 public class ProfileFragment extends Fragment {
 
     private TextView name, number, id, email, logOutBTN;
-    private TextView addressBTN, pastOrdersBTN, constactUsBTN, tosBTN, privacyBTN;
+    private TextView addressBTN, pastOrdersBTN, contactUsBTN, tosBTN, privacyBTN;
     private ProgressDialog mProgress;
     private ImageButton editBTN;
     private TextView toolbarTitle;
@@ -69,7 +67,7 @@ public class ProfileFragment extends Fragment {
         editBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEditPage();
+                startActivity(new Intent(getActivity(), EditProfileActivity.class));
             }
         });
 
@@ -87,7 +85,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        constactUsBTN.setOnClickListener(new View.OnClickListener() {
+        contactUsBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), ContactUsActivity.class));
@@ -97,14 +95,14 @@ public class ProfileFragment extends Fragment {
         tosBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/document/d/e/2PACX-1vRESRvYZHUdn1Nld146Gx9Ne2-xwcLOoy0L07qU0zLqF-57MCryO8tDFCLZ8sRBlw-75BR1aBhMqBH2/pub")));
             }
         });
 
         privacyBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //https://privacypolicyfreshfishhub.blogspot.com/2020/09/privacy-policy-smartech-brain.html
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/document/d/e/2PACX-1vSUcHQZ2sucQs2pIkKF66a1vXYGvgMKImAM1WisrhajEzj1SsKpHwy0czAGhODe64PEAAfc2xIYvZpd/pub")));
             }
         });
 
@@ -117,64 +115,6 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private void showEditPage() {
-        final Dialog dialog = new Dialog(getContext());
-        dialog.setContentView(R.layout.popup_edit_profile);
-        Window window = dialog.getWindow();
-        window.setLayout(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        final EditText name_et = (EditText) dialog.findViewById(R.id.edit_profile_name);
-        final EditText phone_et = (EditText) dialog.findViewById(R.id.edit_profile_phone);
-        phone_et.setEnabled(false);
-        final EditText email_et = (EditText) dialog.findViewById(R.id.edit_profile_email);
-        final TextView warning = (TextView) dialog.findViewById(R.id.edit_profile_warning_tv);
-        warning.setVisibility(View.GONE);
-        name_et.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                warning.setVisibility(View.GONE);
-                return false;
-            }
-        });
-        email_et.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                warning.setVisibility(View.GONE);
-                return false;
-            }
-        });
-        ExtendedFloatingActionButton submitBTN = (ExtendedFloatingActionButton) dialog.findViewById(R.id.edit_profile_next);
-        consumerRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    name_et.setText(task.getResult().getString("consumerName"));
-                    phone_et.setText(task.getResult().getString("consumerPhone"));
-                    email_et.setText(task.getResult().getString("consumerEmail"));
-                }
-            }
-        });
-        submitBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name = name_et.getText().toString();
-                String email = email_et.getText().toString();
-                if (name.isEmpty()) {
-                    warning.setText("Name cannot be empty.");
-                    warning.setVisibility(View.VISIBLE);
-                } else if (email.isEmpty()) {
-                    warning.setText("Email cannot be empty.");
-                    warning.setVisibility(View.VISIBLE);
-                } else {
-                    mProgress.setMessage("Updating User Details ...");
-                    mProgress.show();
-                    dialog.dismiss();
-                    updateData(name, email);
-                }
-            }
-        });
-        dialog.show();
-    }
 
     private void updateData(String name, String email) {
         user.put("consumerName", name);
@@ -230,7 +170,7 @@ public class ProfileFragment extends Fragment {
         editBTN = (ImageButton) view.findViewById(R.id.profile_edit_btn);
         addressBTN = (TextView) view.findViewById(R.id.profile_address_btn);
         pastOrdersBTN = (TextView) view.findViewById(R.id.profile_past_orders_btn);
-        constactUsBTN = (TextView) view.findViewById(R.id.profile_contact_us_btn);
+        contactUsBTN = (TextView) view.findViewById(R.id.profile_contact_us_btn);
         tosBTN = (TextView) view.findViewById(R.id.profile_tos_btn);
         privacyBTN = (TextView) view.findViewById(R.id.profile_privacy_btn);
         logOutBTN = (TextView) view.findViewById(R.id.profile_log_out_btn);

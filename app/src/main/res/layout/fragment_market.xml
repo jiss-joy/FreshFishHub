@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/market_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,22 +12,32 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/market_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20sp"
-            android:layout_marginTop="15sp"
+            android:layout_marginStart="16sp"
+            android:layout_marginTop="16sp"
             android:fontFamily="@font/ubuntu"
             android:text="Market"
             android:textColor="@color/color_White"
             android:textSize="25sp"
             android:textStyle="bold" />
 
+        <ImageView
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="03sp"
+            android:layout_marginEnd="13sp"
+            android:src="@drawable/small_logo" />
+
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/market_search_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/market_tv"
             android:layout_marginHorizontal="15sp"
-            android:layout_marginTop="10sp"
+            android:layout_marginTop="15sp"
             android:layout_marginBottom="15sp"
             android:drawableEnd="@drawable/search"
             android:paddingStart="25sp"
@@ -36,27 +46,7 @@
             app:backgroundTint="@color/color_White"
             app:drawableTint="@color/colorPrimary" />
 
-    </LinearLayout>
-
-
-    <ImageView
-        android:id="@+id/market_no_fish_image"
-        android:layout_width="150sp"
-        android:layout_height="150sp"
-        android:layout_above="@id/market_no_fish_tv"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15sp" />
-
-    <TextView
-        android:id="@+id/market_no_fish_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:fontFamily="@font/ubuntu_bold"
-        android:gravity="center"
-        android:textColor="@color/color_black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+    </RelativeLayout>
 
 
     <androidx.core.widget.NestedScrollView
@@ -78,7 +68,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10sp"
                 android:layout_marginTop="20sp"
-                android:layout_marginBottom="5sp"
                 android:text="Best Deals!"
                 android:textColor="@color/color_black"
                 android:textSize="18sp"
@@ -88,16 +77,31 @@
                 android:id="@+id/best_deals_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/best_deals_tv"
+                android:layout_marginTop="5sp"
                 android:background="@drawable/best_deals_recycler"
                 android:orientation="horizontal"
                 android:padding="5sp" />
+
+            <ImageView
+                android:id="@+id/market_no_best_deals_image"
+                android:layout_width="match_parent"
+                android:layout_height="200sp" />
+
+            <TextView
+                android:id="@+id/market_no_best_deals_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="3sp"
+                android:fontFamily="@font/ubuntu"
+                android:gravity="center"
+                android:textColor="@color/color_black"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/today_arrival_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/best_deals_recycler"
                 android:layout_marginStart="10sp"
                 android:layout_marginTop="15sp"
                 android:text="Today's Arrival!"
@@ -112,6 +116,24 @@
                 android:layout_marginTop="5sp"
                 android:background="@drawable/normal_recycler"
                 android:padding="4sp" />
+
+            <ImageView
+                android:id="@+id/market_no_normal_deals_image"
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                android:layout_marginTop="10sp"
+                android:src="@drawable/fishing" />
+
+            <TextView
+                android:id="@+id/market_no_normal_deals__tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="3sp"
+                android:fontFamily="@font/ubuntu"
+                android:gravity="center"
+                android:textColor="@color/color_black"
+                android:textSize="20sp" />
 
         </LinearLayout>
 

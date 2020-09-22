@@ -25,6 +25,14 @@
         app:floatingSearch_suggestionsListAnimDuration="250"
         app:floatingSearch_viewSearchInputTextColor="@color/color_White">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="200sp"
+            android:layout_height="200sp"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/no_best_deals" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_recycler"
             android:layout_width="match_parent"

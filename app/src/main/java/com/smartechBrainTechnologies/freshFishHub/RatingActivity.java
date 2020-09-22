@@ -142,7 +142,7 @@ public class RatingActivity extends AppCompatActivity {
                         orderDetails.put("fishPostRating", fishRating);
                         orderDetails.put("fishPostOrderNumbers", String.valueOf(number));
                         orderDetails.put("fishPostTotalScore", String.valueOf(totalRating));
-                        fishPostRef.document(fishID).update(orderDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        bestDealRef.document(fishID).update(orderDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {

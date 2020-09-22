@@ -1,13 +1,13 @@
 package com.smartechBrainTechnologies.freshFishHub;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -69,7 +69,8 @@ public class AdapterShortFishDetails extends RecyclerView.Adapter<AdapterShortFi
             List<ModelShortFishDetails> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(FishListFull);
+//                filteredList.addAll(FishListFull);
+                filteredList.clear();
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
@@ -81,8 +82,11 @@ public class AdapterShortFishDetails extends RecyclerView.Adapter<AdapterShortFi
             }
 
             FilterResults results = new FilterResults();
-            results.values = filteredList;
+            if (filteredList.isEmpty()) {
+//                Toast.makeText(context, "No matches Found", Toast.LENGTH_SHORT).show();
+            }
 
+            results.values = filteredList;
             return results;
         }
 

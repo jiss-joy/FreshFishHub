@@ -27,8 +27,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class ConsumerOrdersFragment extends Fragment implements AdapterShortOrder.OnOrderClickListener {
 
@@ -67,11 +69,12 @@ public class ConsumerOrdersFragment extends Fragment implements AdapterShortOrde
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 orderList.clear();
-                Calendar calendar = Calendar.getInstance();
-                String today = DateFormat.getDateInstance().format(calendar.getTime());
+                Date date = Calendar.getInstance().getTime();
+                DateFormat dateFormat = new SimpleDateFormat("MMM dd, YYYY");
+                String currentDate = dateFormat.format(date);
                 for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
                     if (documentSnapshot.getString("orderConsumerID").equals(user.getUid())) {
-                        if (documentSnapshot.getString("orderDate").equals(today)) {
+                        if (documentSnapshot.getString("orderDate").equals(currentDate)) {
                             String orderID = documentSnapshot.getId();
                             String fishImage = documentSnapshot.getString("orderFishImage");
                             String fishName = documentSnapshot.getString("orderFishName");
@@ -85,12 +88,12 @@ public class ConsumerOrdersFragment extends Fragment implements AdapterShortOrde
                     }
                 }
                 if (orderList.isEmpty()) {
-                    consumerOrderRecycler.setVisibility(View.GONE);
                     Picasso.get().load(R.drawable.empty_order).into(noOrderImage);
                     noOrderTV.setText("You do not have any order.\nPlease place a new order in the market now!");
+                    noOrderImage.setVisibility(View.VISIBLE);
+                    noOrderTV.setVisibility(View.VISIBLE);
                 } else {
-                    noOrderTV.setVisibility(View.GONE);
-                    noOrderImage.setVisibility(View.GONE);
+                    consumerOrderRecycler.setVisibility(View.VISIBLE);
                     mAdapter = new AdapterShortOrder(getContext(), orderList, ConsumerOrdersFragment.this);
                     consumerOrderRecycler.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
@@ -102,10 +105,13 @@ public class ConsumerOrdersFragment extends Fragment implements AdapterShortOrde
 
     private void initValues(View view) {
         consumerOrderRecycler = (RecyclerView) view.findViewById(R.id.consumer_order_recycler);
+        consumerOrderRecycler.setVisibility(View.GONE);
         mProgress = new ProgressDialog(getContext());
         mProgress.setCancelable(false);
         noOrderImage = (ImageView) view.findViewById(R.id.consumer_order_no_orders_image);
         noOrderTV = (TextView) view.findViewById(R.id.consumer_order_no_orders_tv);
+        noOrderTV.setVisibility(View.GONE);
+        noOrderImage.setVisibility(View.GONE);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();

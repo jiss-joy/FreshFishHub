@@ -156,8 +156,16 @@ public class FullFishDetailsActivity extends AppCompatActivity {
                 fish_time.setText("Posted on " + documentSnapshot.getString("fishPostDate")
                         + " at " + documentSnapshot.getString("fishPostTime"));
                 seller_name.setText("Posted by " + documentSnapshot.getString("sellerName"));
-                ratingBar.setRating(Float.parseFloat(documentSnapshot.getString("fishPostRating")));
-                rating.setText(documentSnapshot.getString("(" + "fishPostRating" + ")"));
+                if (documentSnapshot.getString("fishPostRating").equals("0")) {
+                    ratingBar.setVisibility(View.GONE);
+                    rating.setVisibility(View.GONE);
+                } else {
+                    ratingBar.setVisibility(View.VISIBLE);
+                    rating.setVisibility(View.VISIBLE);
+                    ratingBar.setRating(Float.parseFloat(documentSnapshot.getString("fishPostRating")));
+                    rating.setText(documentSnapshot.getString("(" + "fishPostRating" + ")"));
+                }
+
                 mProgress.dismiss();
             }
         });
@@ -187,8 +195,15 @@ public class FullFishDetailsActivity extends AppCompatActivity {
                 fish_time.setText("Posted on " + documentSnapshot.getString("fishPostDate")
                         + " at " + documentSnapshot.getString("fishPostTime"));
                 seller_name.setText("Posted by " + documentSnapshot.getString("sellerName"));
-                ratingBar.setRating(Float.parseFloat(documentSnapshot.getString("fishPostRating")));
-                rating.setText(documentSnapshot.getString("(" + "fishPostRating" + ")"));
+                if (documentSnapshot.getString("fishPostRating").equals("0")) {
+                    ratingBar.setVisibility(View.GONE);
+                    rating.setVisibility(View.GONE);
+                } else {
+                    ratingBar.setVisibility(View.VISIBLE);
+                    rating.setVisibility(View.VISIBLE);
+                    ratingBar.setRating(Float.parseFloat(documentSnapshot.getString("fishPostRating")));
+                    rating.setText(documentSnapshot.getString("(" + "fishPostRating" + ")"));
+                }
                 mProgress.dismiss();
             }
         });

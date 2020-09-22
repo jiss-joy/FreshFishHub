@@ -21,13 +21,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
+            <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/rating_image"
-                android:layout_width="200sp"
-                android:layout_height="200sp"
-                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="250sp"
                 android:layout_marginTop="30sp"
-                android:src="@drawable/successful" />
+                app:lottie_autoPlay="true"
+                app:lottie_rawRes="@raw/order_placed" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -83,7 +83,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10sp"
-                    android:text="(4.5)"
                     android:textColor="@color/color_black"
                     android:textSize="20sp" />
             </LinearLayout>

@@ -9,10 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,7 +35,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -43,7 +45,7 @@ import java.util.Random;
 public class ConfirmOrderActivity extends AppCompatActivity {
 
     private TextView fishName, availability, price, qty, total, name, building, area, landmark, city, pin, status, noAddress, toolbarTitle;
-    private ExtendedFloatingActionButton placeOrderBTN;
+    private LinearLayout placeOrderBTN;
     private ProgressDialog mProgress;
     private ImageButton optionsBTN;
     private CardView addressCard;
@@ -75,7 +77,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
 
         toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("ORDER SUMMARY");
+        toolbarTitle.setText("Order Summary");
 
         Intent intent = getIntent();
         fishID = intent.getStringExtra("FISH ID");
@@ -111,15 +113,28 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         placeOrderBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (dealType == 1) {
-                    placeBestOrder();
-                } else if (dealType == 2) {
-                    placeNormalOrder();
+
+                if (addressFlag) {
+                    noAddress.setTextColor(getResources().getColor(R.color.color_torquise));
                 } else {
-                    checkForDeal();
+                    if (dealType == 1) {
+                        placeBestOrder();
+                    } else if (dealType == 2) {
+                        placeNormalOrder();
+                    } else {
+                        checkForDeal();
+                    }
                 }
             }
         });
+
+        noAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ConfirmOrderActivity.this, MyAddressesActivity.class));
+            }
+        });
+
     }
 
     private void checkForDeal() {
@@ -147,10 +162,15 @@ public class ConfirmOrderActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 Random random = new Random();
-                String deliveryCode = String.valueOf(random.nextInt(10000) + 1000);
-                Calendar calendar = Calendar.getInstance();
-                String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
-                String currentTime = DateFormat.getTimeInstance().format(calendar.getTime());
+                String deliveryCode = String.valueOf(random.nextInt(9000) + 1000);
+
+                Date date = Calendar.getInstance().getTime();
+                DateFormat dateFormat = new SimpleDateFormat("MMM dd, YYYY");
+                String currentDate = dateFormat.format(date);
+
+                Date time = Calendar.getInstance().getTime();
+                DateFormat timeFormat = new SimpleDateFormat("hh:MM a");
+                String currentTime = timeFormat.format(time);
 
                 DocumentSnapshot documentSnapshot = task.getResult();
                 final String sellerID = documentSnapshot.getString("sellerID");
@@ -212,16 +232,20 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
     private void placeNormalOrder() {
         mProgress.setMessage("Placing Order...");
-        mProgress.setIcon(R.drawable.six);
         mProgress.show();
         fishPostRef.document(fishID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 Random random = new Random();
-                String deliveryCode = String.valueOf(random.nextInt(10000) + 1000);
-                Calendar calendar = Calendar.getInstance();
-                String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
-                String currentTime = DateFormat.getTimeInstance().format(calendar.getTime());
+                String deliveryCode = String.valueOf(random.nextInt(9000) + 1000);
+
+                Date date = Calendar.getInstance().getTime();
+                DateFormat dateFormat = new SimpleDateFormat("MMM dd, YYYY");
+                String currentDate = dateFormat.format(date);
+
+                Date time = Calendar.getInstance().getTime();
+                DateFormat timeFormat = new SimpleDateFormat("hh:mm a");
+                String currentTime = timeFormat.format(time);
 
                 DocumentSnapshot documentSnapshot1 = task.getResult();
                 final String sellerID = documentSnapshot1.getString("sellerID");
@@ -276,9 +300,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
             }
         });
         mProgress.dismiss();
-        Toast.makeText(this, "Order placed successfully", Toast.LENGTH_SHORT).show();
         finish();
-        startActivity(new Intent(ConfirmOrderActivity.this, MainActivity.class));
+        startActivity(new Intent(ConfirmOrderActivity.this, OrderPlacedActivity.class));
     }
 
     private void loadAddress() {
@@ -417,7 +440,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         city = (TextView) findViewById(R.id.confirm_order_address_city);
         pin = (TextView) findViewById(R.id.confirm_order_address_pin);
         status = (TextView) findViewById(R.id.confirm_order_address_status);
-        placeOrderBTN = (ExtendedFloatingActionButton) findViewById(R.id.confirm_order_place_order_btn);
+        placeOrderBTN = (LinearLayout) findViewById(R.id.confirm_order_place_order_btn);
         optionsBTN = (ImageButton) findViewById(R.id.confirm_order_address_options_btn);
         addressCard = (CardView) findViewById(R.id.confirm_order_address_card);
         noAddress = (TextView) findViewById(R.id.confirm_order_no_address_tv);

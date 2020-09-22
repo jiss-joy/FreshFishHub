@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -34,6 +35,7 @@ public class MyAddressesActivity extends AppCompatActivity implements AdapterAdd
     private RecyclerView addressRecycler;
     private ExtendedFloatingActionButton addAddressBTN;
     private ProgressDialog mProgress;
+    private ImageView noAddressImage;
     private TextView noAddressTV, toolbarTitle;
 
     private FirebaseFirestore db;
@@ -87,12 +89,13 @@ public class MyAddressesActivity extends AppCompatActivity implements AdapterAdd
                     addressOptionList.add(addresses.getId());
                 }
                 if (addressList.isEmpty()) {
-                    addressRecycler.setVisibility(View.INVISIBLE);
+                    addressRecycler.setVisibility(View.GONE);
                     addAddressBTN.extend();
-                    noAddressTV.setText("You do not have any addresses until now.\n" +
-                            "Add one now.");
+                    noAddressTV.setVisibility(View.VISIBLE);
+                    noAddressImage.setVisibility(View.VISIBLE);
                 } else {
-                    noAddressTV.setVisibility(View.INVISIBLE);
+                    noAddressTV.setVisibility(View.GONE);
+                    noAddressImage.setVisibility(View.GONE);
                     addressRecycler.setVisibility(View.VISIBLE);
                     mAdapter = new AdapterAddress(MyAddressesActivity.this, addressList, MyAddressesActivity.this);
                     addressRecycler.setAdapter(mAdapter);
@@ -110,6 +113,7 @@ public class MyAddressesActivity extends AppCompatActivity implements AdapterAdd
         mProgress = new ProgressDialog(this);
         mProgress.setCancelable(false);
         noAddressTV = (TextView) findViewById(R.id.my_addresses_no_address_tv);
+        noAddressImage = (ImageView) findViewById(R.id.my_addresses_no_address_image);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();

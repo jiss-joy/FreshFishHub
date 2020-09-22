@@ -11,14 +11,24 @@
         android:id="@+id/my_address_toolbar"
         layout="@layout/toolbar" />
 
+    <ImageView
+        android:id="@+id/my_addresses_no_address_image"
+        android:layout_width="200sp"
+        android:layout_height="200sp"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/address" />
+
     <TextView
         android:id="@+id/my_addresses_no_address_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_margin="20sp"
+        android:layout_below="@id/my_addresses_no_address_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10sp"
         android:fontFamily="@font/ubuntu_bold"
         android:gravity="center"
+        android:text="You do not have any addresses until now.\nAdd one now."
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         android:textStyle="bold" />
