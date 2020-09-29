@@ -174,17 +174,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/color_light"
+        android:background="@color/colorPrimary"
         android:gravity="center">
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/edit_address_edit_update_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15sp"
-            android:layout_marginBottom="15sp"
-            android:ems="8"
-            android:fontFamily="@font/architects_daughter"
+            android:layout_marginTop="10sp"
+            android:layout_marginBottom="10sp"
+            android:ems="10"
+            android:fontFamily="@font/ubuntu"
             android:gravity="center"
             android:text="Update"
             android:textColor="@color/colorPrimary"

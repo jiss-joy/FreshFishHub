@@ -1,15 +1,8 @@
 package com.smartechBrainTechnologies.freshFishHub;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.transition.AutoTransition;
-import android.transition.Explode;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,10 +17,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-
-        splashImage = (ImageView) findViewById(R.id.splash_image);
-
-        splashImage.setImageResource(R.drawable.main_logo);
 
         splashScreen();
     }

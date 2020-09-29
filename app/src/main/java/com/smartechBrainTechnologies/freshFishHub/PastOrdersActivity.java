@@ -44,7 +44,12 @@ public class PastOrdersActivity extends AppCompatActivity implements AdapterShor
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_orders);
 
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        mProgress = new ProgressDialog(PastOrdersActivity.this);
+        mProgress.setCancelable(false);
+        mProgress.setMessage("Please wait...");
+        mProgress.show();
+
+        toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Past Orders");
 
         initValues();
@@ -54,8 +59,6 @@ public class PastOrdersActivity extends AppCompatActivity implements AdapterShor
     }
 
     private void setUpRecycler() {
-        mProgress.setMessage("Please wait...");
-        mProgress.show();
         orderRef.orderBy("orderDate", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -77,24 +80,24 @@ public class PastOrdersActivity extends AppCompatActivity implements AdapterShor
                     pastOrderRecycler.setVisibility(View.GONE);
                     Picasso.get().load(R.drawable.empty_order).into(noOrderImage);
                     noOrderTV.setText("You have not ordered anything until now.\nPlease place a new order in the market now!");
+                    mProgress.dismiss();
                 } else {
                     noOrderTV.setVisibility(View.GONE);
                     noOrderImage.setVisibility(View.GONE);
                     mAdapter = new AdapterShortOrder(PastOrdersActivity.this, orderList, PastOrdersActivity.this);
                     pastOrderRecycler.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
+                    mProgress.dismiss();
                 }
             }
         });
-        mProgress.dismiss();
+
     }
 
     private void initValues() {
-        pastOrderRecycler = (RecyclerView) findViewById(R.id.past_order_recycler);
-        mProgress = new ProgressDialog(PastOrdersActivity.this);
-        mProgress.setCancelable(false);
-        noOrderImage = (ImageView) findViewById(R.id.past_order_no_orders_image);
-        noOrderTV = (TextView) findViewById(R.id.past_order_no_orders_tv);
+        pastOrderRecycler = findViewById(R.id.past_order_recycler);
+        noOrderImage = findViewById(R.id.past_order_no_orders_image);
+        noOrderTV = findViewById(R.id.past_order_no_orders_tv);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();

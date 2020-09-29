@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -76,7 +77,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirm_order);
 
 
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Order Summary");
 
         Intent intent = getIntent();
@@ -113,7 +114,13 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         placeOrderBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                placeOrderBTN.setClickable(true);
+                placeOrderBTN.setAnimation(new Animation() {
+                    @Override
+                    protected Animation clone() throws CloneNotSupportedException {
+                        return super.clone();
+                    }
+                });
                 if (addressFlag) {
                     noAddress.setTextColor(getResources().getColor(R.color.color_torquise));
                 } else {
@@ -165,11 +172,11 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 String deliveryCode = String.valueOf(random.nextInt(9000) + 1000);
 
                 Date date = Calendar.getInstance().getTime();
-                DateFormat dateFormat = new SimpleDateFormat("MMM dd, YYYY");
+                DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
                 String currentDate = dateFormat.format(date);
 
                 Date time = Calendar.getInstance().getTime();
-                DateFormat timeFormat = new SimpleDateFormat("hh:MM a");
+                DateFormat timeFormat = new SimpleDateFormat("hh:mm a");
                 String currentTime = timeFormat.format(time);
 
                 DocumentSnapshot documentSnapshot = task.getResult();
@@ -181,7 +188,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 orderDetails.put("orderFishQty", fishQty);
                 orderDetails.put("orderType", "Best");
                 orderDetails.put("orderConsumerID", currentUser.getUid());
-                orderDetails.put("orderStatus", "Placed");
+                orderDetails.put("orderStatus", "B");
                 orderDetails.put("orderFishName", documentSnapshot.getString("fishName"));
                 orderDetails.put("orderDate", currentDate);
                 orderDetails.put("orderTime", currentTime);
@@ -240,7 +247,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 String deliveryCode = String.valueOf(random.nextInt(9000) + 1000);
 
                 Date date = Calendar.getInstance().getTime();
-                DateFormat dateFormat = new SimpleDateFormat("MMM dd, YYYY");
+                DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
                 String currentDate = dateFormat.format(date);
 
                 Date time = Calendar.getInstance().getTime();
@@ -256,7 +263,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 orderDetails.put("orderFishQty", fishQty);
                 orderDetails.put("orderType", "Normal");
                 orderDetails.put("orderConsumerID", currentUser.getUid());
-                orderDetails.put("orderStatus", "Placed");
+                orderDetails.put("orderStatus", "B");
                 orderDetails.put("orderFishName", documentSnapshot1.getString("fishName"));
                 orderDetails.put("orderDate", currentDate);
                 orderDetails.put("orderTime", currentTime);
@@ -415,7 +422,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.popup_oos_info);
         Window window = dialog.getWindow();
         window.setLayout(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        ExtendedFloatingActionButton okBTN = (ExtendedFloatingActionButton) dialog.findViewById(R.id.oos_ok_btn);
+        ExtendedFloatingActionButton okBTN = dialog.findViewById(R.id.oos_ok_btn);
         okBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -428,22 +435,22 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     }
 
     private void initValues() {
-        fishName = (TextView) findViewById(R.id.confirm_order_fish_name);
-        availability = (TextView) findViewById(R.id.confirm_order_fish_availability);
-        price = (TextView) findViewById(R.id.confirm_order_fish_price);
-        qty = (TextView) findViewById(R.id.confirm_order_fish_qty);
-        total = (TextView) findViewById(R.id.confirm_order_total);
-        name = (TextView) findViewById(R.id.confirm_order_address_name);
-        building = (TextView) findViewById(R.id.confirm_order_address_building);
-        area = (TextView) findViewById(R.id.confirm_order_address_area);
-        landmark = (TextView) findViewById(R.id.confirm_order_address_landmark);
-        city = (TextView) findViewById(R.id.confirm_order_address_city);
-        pin = (TextView) findViewById(R.id.confirm_order_address_pin);
-        status = (TextView) findViewById(R.id.confirm_order_address_status);
-        placeOrderBTN = (LinearLayout) findViewById(R.id.confirm_order_place_order_btn);
-        optionsBTN = (ImageButton) findViewById(R.id.confirm_order_address_options_btn);
-        addressCard = (CardView) findViewById(R.id.confirm_order_address_card);
-        noAddress = (TextView) findViewById(R.id.confirm_order_no_address_tv);
+        fishName = findViewById(R.id.confirm_order_fish_name);
+        availability = findViewById(R.id.confirm_order_fish_availability);
+        price = findViewById(R.id.confirm_order_fish_price);
+        qty = findViewById(R.id.confirm_order_fish_qty);
+        total = findViewById(R.id.confirm_order_total);
+        name = findViewById(R.id.confirm_order_address_name);
+        building = findViewById(R.id.confirm_order_address_building);
+        area = findViewById(R.id.confirm_order_address_area);
+        landmark = findViewById(R.id.confirm_order_address_landmark);
+        city = findViewById(R.id.confirm_order_address_city);
+        pin = findViewById(R.id.confirm_order_address_pin);
+        status = findViewById(R.id.confirm_order_address_status);
+        placeOrderBTN = findViewById(R.id.confirm_order_place_order_btn);
+        optionsBTN = findViewById(R.id.confirm_order_address_options_btn);
+        addressCard = findViewById(R.id.confirm_order_address_card);
+        noAddress = findViewById(R.id.confirm_order_no_address_tv);
         mProgress = new ProgressDialog(this);
         mProgress.setCancelable(false);
 

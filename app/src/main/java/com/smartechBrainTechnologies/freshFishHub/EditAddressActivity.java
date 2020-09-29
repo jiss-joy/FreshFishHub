@@ -155,15 +155,15 @@ public class EditAddressActivity extends AppCompatActivity {
     }
 
     private void initValues() {
-        name = (EditText) findViewById(R.id.edit_address_name);
-        building = (EditText) findViewById(R.id.edit_address_building);
-        area = (EditText) findViewById(R.id.edit_address_area);
-        landmark = (EditText) findViewById(R.id.edit_address_landmark);
-        city = (EditText) findViewById(R.id.edit_address_city);
-        pin = (EditText) findViewById(R.id.edit_address_pin);
-        state = (EditText) findViewById(R.id.edit_address_state);
-        country = (EditText) findViewById(R.id.edit_address_country);
-        updateBTN = (ExtendedFloatingActionButton) findViewById(R.id.edit_address_edit_update_btn);
+        name = findViewById(R.id.edit_address_name);
+        building = findViewById(R.id.edit_address_building);
+        area = findViewById(R.id.edit_address_area);
+        landmark = findViewById(R.id.edit_address_landmark);
+        city = findViewById(R.id.edit_address_city);
+        pin = findViewById(R.id.edit_address_pin);
+        state = findViewById(R.id.edit_address_state);
+        country = findViewById(R.id.edit_address_country);
+        updateBTN = findViewById(R.id.edit_address_edit_update_btn);
         updateBTN.shrink();
         mProgress = new ProgressDialog(this);
         mProgress.setCancelable(false);
@@ -177,6 +177,6 @@ public class EditAddressActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
-        startActivity(new Intent(EditAddressActivity.this, MyAddressesActivity.class));
+        super.onBackPressed();
     }
 }

@@ -55,7 +55,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details);
 
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Order Summary");
 
         Intent intent = getIntent();
@@ -86,8 +86,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.popup_order_cancellation);
         Window window = dialog.getWindow();
         window.setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        ExtendedFloatingActionButton confirm_btn = (ExtendedFloatingActionButton) dialog.findViewById(R.id.confirm_cancel_confirm);
-        ExtendedFloatingActionButton cancel_btn = (ExtendedFloatingActionButton) dialog.findViewById(R.id.confirm_cancel_cancel);
+        ExtendedFloatingActionButton confirm_btn = dialog.findViewById(R.id.confirm_cancel_confirm);
+        ExtendedFloatingActionButton cancel_btn = dialog.findViewById(R.id.confirm_cancel_cancel);
         confirm_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,8 +112,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.popup_delivery_code);
         Window window = dialog.getWindow();
         window.setLayout(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        final EditText deliveryCode_et = (EditText) dialog.findViewById(R.id.delivery_code);
-        ExtendedFloatingActionButton submitBTN = (ExtendedFloatingActionButton) dialog.findViewById(R.id.delivery_code_next);
+        final EditText deliveryCode_et = dialog.findViewById(R.id.delivery_code);
+        ExtendedFloatingActionButton submitBTN = dialog.findViewById(R.id.delivery_code_next);
         submitBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,14 +139,14 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 final String type = task.getResult().getString("orderType");
                 if (task.isSuccessful()) {
                     if (userDeliveryCode.equals(task.getResult().getString("orderDeliveryCode"))) {
-                        orderDetails.put("orderStatus", "Delivered");
+                        orderDetails.put("orderStatus", "D");
                         orderRef.document(orderID).update(orderDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 HashMap<String, String> orderNotification = new HashMap<>();
                                 orderNotification.put("senderID", currentUser.getUid());
                                 orderNotification.put("notificationType", "orderDelivered");
-                                notificationRef.child("Placed Notifications").child(currentUser.getUid()).push().setValue(orderNotification);
+                                notificationRef.child("Delivered Notifications").child(currentUser.getUid()).push().setValue(orderNotification);
 
                                 cancelBTN.setVisibility(View.GONE);
                                 deliverBTN.setVisibility(View.GONE);
@@ -170,7 +170,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     }
 
     private void cancelOrder() {
-        orderDetails.put("orderStatus", "Cancelled");
+        orderDetails.put("orderStatus", "F");
         orderRef.document(orderID).update(orderDetails);
         orderRef.document(orderID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -218,13 +218,13 @@ public class OrderDetailsActivity extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 switch (value.getString("orderStatus")) {
-                    case "Placed":
+                    case "B":
                         orderStatusShort.setText("Placed");
                         orderStatusLong.setText(R.string.order_placed);
                         deliverBTN.setVisibility(View.GONE);
                         cancelBTN.setVisibility(View.VISIBLE);
                         break;
-                    case "Accepted":
+                    case "A":
                         orderStatusShort.setText("Accepted");
                         orderStatusShort.setTextColor(getResources().getColor(R.color.color_dark_orange));
                         orderStatusShort.setBackgroundResource(R.drawable.custom_field_orange);
@@ -232,7 +232,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                         cancelBTN.setVisibility(View.GONE);
                         deliverBTN.setVisibility(View.GONE);
                         break;
-                    case "Declined":
+                    case "E":
                         orderStatusShort.setText("Declined");
                         orderStatusShort.setTextColor(getResources().getColor(R.color.color_red));
                         orderStatusShort.setBackgroundResource(R.drawable.custom_field_red);
@@ -240,7 +240,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                         cancelBTN.setVisibility(View.GONE);
                         deliverBTN.setVisibility(View.GONE);
                         break;
-                    case "Delivered":
+                    case "D":
                         orderStatusShort.setText("Delivered");
                         orderStatusShort.setTextColor(getResources().getColor(R.color.color_dark_green));
                         orderStatusShort.setBackgroundResource(R.drawable.custom_field_green);
@@ -248,7 +248,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                         cancelBTN.setVisibility(View.GONE);
                         deliverBTN.setVisibility(View.GONE);
                         break;
-                    case "Delivery":
+                    case "C":
                         orderStatusShort.setText("Delivery");
                         orderStatusShort.setTextColor(getResources().getColor(R.color.color_dark_orange));
                         orderStatusShort.setBackgroundResource(R.drawable.custom_field_orange);
@@ -256,7 +256,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                         cancelBTN.setVisibility(View.GONE);
                         deliverBTN.setVisibility(View.VISIBLE);
                         break;
-                    case "Cancelled":
+                    case "F":
                         orderStatusShort.setText("Cancelled");
                         orderStatusShort.setTextColor(getResources().getColor(R.color.color_red));
                         orderStatusShort.setBackgroundResource(R.drawable.custom_field_red);
@@ -278,22 +278,22 @@ public class OrderDetailsActivity extends AppCompatActivity {
     }
 
     private void initValues() {
-        order_ID = (TextView) findViewById(R.id.order_details_order_id);
-        orderStatusLong = (TextView) findViewById(R.id.order_details_status_tv);
-        orderStatusShort = (TextView) findViewById(R.id.order_details_status);
-        fName = (TextView) findViewById(R.id.order_details_fish_name);
-        fPrice = (TextView) findViewById(R.id.order_details_order_price);
-        fQty = (TextView) findViewById(R.id.order_details_qty);
-        name = (TextView) findViewById(R.id.order_details_name);
-        area = (TextView) findViewById(R.id.order_details_area);
-        building = (TextView) findViewById(R.id.order_details_building);
-        city = (TextView) findViewById(R.id.order_details_city);
-        pin = (TextView) findViewById(R.id.order_details_pin);
-        landmark = (TextView) findViewById(R.id.order_details_landmark);
-        time = (TextView) findViewById(R.id.order_details_order_time);
-        totalPrice = (TextView) findViewById(R.id.order_details_total);
-        cancelBTN = (LinearLayout) findViewById(R.id.order_details_cancel_btn);
-        deliverBTN = (LinearLayout) findViewById(R.id.order_details_deliver_btn);
+        order_ID = findViewById(R.id.order_details_order_id);
+        orderStatusLong = findViewById(R.id.order_details_status_tv);
+        orderStatusShort = findViewById(R.id.order_details_status);
+        fName = findViewById(R.id.order_details_fish_name);
+        fPrice = findViewById(R.id.order_details_order_price);
+        fQty = findViewById(R.id.order_details_qty);
+        name = findViewById(R.id.order_details_name);
+        area = findViewById(R.id.order_details_area);
+        building = findViewById(R.id.order_details_building);
+        city = findViewById(R.id.order_details_city);
+        pin = findViewById(R.id.order_details_pin);
+        landmark = findViewById(R.id.order_details_landmark);
+        time = findViewById(R.id.order_details_order_time);
+        totalPrice = findViewById(R.id.order_details_total);
+        cancelBTN = findViewById(R.id.order_details_cancel_btn);
+        deliverBTN = findViewById(R.id.order_details_deliver_btn);
         mProgress = new ProgressDialog(this);
         mProgress.setCancelable(false);
 

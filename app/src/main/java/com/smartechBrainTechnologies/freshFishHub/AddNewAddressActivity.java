@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +32,7 @@ public class AddNewAddressActivity extends AppCompatActivity {
 
     private EditText addressName, addressBuilding, addressCity, addressLandmark, addressArea,
             addressPin, addressState, addressCountry;
-    private ExtendedFloatingActionButton submitBTN;
+    private LinearLayout submitBTN;
     private ProgressDialog mProgress;
     private TextView toolbarTitle;
 
@@ -47,7 +48,7 @@ public class AddNewAddressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_address);
 
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Add Address");
 
         initValues();
@@ -106,8 +107,8 @@ public class AddNewAddressActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.popup_address_confirmation);
         Window window = dialog.getWindow();
         window.setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        ExtendedFloatingActionButton confirm_btn = (ExtendedFloatingActionButton) dialog.findViewById(R.id.address_confirmation_yes);
-        ExtendedFloatingActionButton cancel_btn = (ExtendedFloatingActionButton) dialog.findViewById(R.id.address_confirmation_no);
+        ExtendedFloatingActionButton confirm_btn = dialog.findViewById(R.id.address_confirmation_yes);
+        ExtendedFloatingActionButton cancel_btn = dialog.findViewById(R.id.address_confirmation_no);
         confirm_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,19 +169,19 @@ public class AddNewAddressActivity extends AppCompatActivity {
     }
 
     private void initValues() {
-        addressName = (EditText) findViewById(R.id.add_new_address_name);
-        addressBuilding = (EditText) findViewById(R.id.add_new_address_building);
-        addressCity = (EditText) findViewById(R.id.add_new_address_city);
-        addressLandmark = (EditText) findViewById(R.id.add_new_address_landmark);
-        addressArea = (EditText) findViewById(R.id.add_new_address_area);
-        addressPin = (EditText) findViewById(R.id.add_new_address_pin);
-        addressState = (EditText) findViewById(R.id.add_new_address_state);
+        addressName = findViewById(R.id.add_new_address_name);
+        addressBuilding = findViewById(R.id.add_new_address_building);
+        addressCity = findViewById(R.id.add_new_address_city);
+        addressLandmark = findViewById(R.id.add_new_address_landmark);
+        addressArea = findViewById(R.id.add_new_address_area);
+        addressPin = findViewById(R.id.add_new_address_pin);
+        addressState = findViewById(R.id.add_new_address_state);
         addressState.setText("Kerala");
         addressState.setEnabled(false);
-        addressCountry = (EditText) findViewById(R.id.add_new_address_country);
+        addressCountry = findViewById(R.id.add_new_address_country);
         addressCountry.setText("India");
         addressCountry.setEnabled(false);
-        submitBTN = (ExtendedFloatingActionButton) findViewById(R.id.add_new_address_submit_btn);
+        submitBTN = findViewById(R.id.add_new_address_submit_btn);
         mProgress = new ProgressDialog(this);
         mProgress.setCancelable(false);
 
@@ -194,5 +195,6 @@ public class AddNewAddressActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
+        super.onBackPressed();
     }
 }

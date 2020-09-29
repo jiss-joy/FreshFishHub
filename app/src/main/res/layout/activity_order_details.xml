@@ -326,7 +326,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/ubuntu"
             android:paddingVertical="10sp"
-            android:text="Delivered"
+            android:text="Delivered? Click here"
             android:textColor="@color/color_White"
             android:textSize="20sp"
             android:textStyle="bold" />

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,7 +22,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -34,7 +37,7 @@ public class FullFishDetailsActivity extends AppCompatActivity {
     private ImageButton addBTN, removeBTN;
     private LinearLayout buyNowBTN;
     private ProgressDialog mProgress;
-    private TextView toolbarTitle;
+    private TextView toolbarTitle, rating_tv;
     private RatingBar ratingBar;
 
     private String fishID;
@@ -56,7 +59,7 @@ public class FullFishDetailsActivity extends AppCompatActivity {
         fishID = intent.getStringExtra("FISH ID");
         dealType = intent.getIntExtra("DEAL TYPE", 0);
 
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Item Details");
 
         initValues();
@@ -159,11 +162,12 @@ public class FullFishDetailsActivity extends AppCompatActivity {
                 if (documentSnapshot.getString("fishPostRating").equals("0")) {
                     ratingBar.setVisibility(View.GONE);
                     rating.setVisibility(View.GONE);
+                    rating_tv.setText("Not rated yet.");
                 } else {
                     ratingBar.setVisibility(View.VISIBLE);
                     rating.setVisibility(View.VISIBLE);
                     ratingBar.setRating(Float.parseFloat(documentSnapshot.getString("fishPostRating")));
-                    rating.setText(documentSnapshot.getString("(" + "fishPostRating" + ")"));
+                    rating.setText("(" + documentSnapshot.getString("fishPostRating") + ")");
                 }
 
                 mProgress.dismiss();
@@ -176,14 +180,13 @@ public class FullFishDetailsActivity extends AppCompatActivity {
         mProgress.setMessage("Please wait...");
         mProgress.show();
 
-        fishPostRef.document(fishID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        fishPostRef.document(fishID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                DocumentSnapshot documentSnapshot = task.getResult();
-                Picasso.get().load(documentSnapshot.getString("fishImage")).fit().centerInside().into(fish_pic);
-                fish_name.setText(documentSnapshot.getString("fishName"));
-                fish_price.setText("₹" + documentSnapshot.getString("fishPrice") + "/Kg");
-                if (documentSnapshot.getString("fishAvailability").equals("Available")) {
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                Picasso.get().load(value.getString("fishImage")).fit().centerInside().into(fish_pic);
+                fish_name.setText(value.getString("fishName"));
+                fish_price.setText("₹" + value.getString("fishPrice") + "/Kg");
+                if (value.getString("fishAvailability").equals("Available")) {
                     fish_availability.setTextColor(Color.parseColor("#00FF0C"));
                     fish_availability.setText("Currently in Stock");
                 } else {
@@ -192,17 +195,18 @@ public class FullFishDetailsActivity extends AppCompatActivity {
                     buyNowBTN.setBackgroundColor(Color.parseColor("#FF0000"));
                     fish_availability.setText("Currently out of stock");
                 }
-                fish_time.setText("Posted on " + documentSnapshot.getString("fishPostDate")
-                        + " at " + documentSnapshot.getString("fishPostTime"));
-                seller_name.setText("Posted by " + documentSnapshot.getString("sellerName"));
-                if (documentSnapshot.getString("fishPostRating").equals("0")) {
+                fish_time.setText("Posted on " + value.getString("fishPostDate")
+                        + " at " + value.getString("fishPostTime"));
+                seller_name.setText("Posted by " + value.getString("sellerName"));
+                if (value.getString("fishPostRating").equals("0")) {
                     ratingBar.setVisibility(View.GONE);
                     rating.setVisibility(View.GONE);
+                    rating_tv.setText("Not rated yet.");
                 } else {
                     ratingBar.setVisibility(View.VISIBLE);
                     rating.setVisibility(View.VISIBLE);
-                    ratingBar.setRating(Float.parseFloat(documentSnapshot.getString("fishPostRating")));
-                    rating.setText(documentSnapshot.getString("(" + "fishPostRating" + ")"));
+                    ratingBar.setRating(Float.parseFloat(value.getString("fishPostRating")));
+                    rating.setText("(" + value.getString("fishPostRating") + ")");
                 }
                 mProgress.dismiss();
             }
@@ -211,19 +215,20 @@ public class FullFishDetailsActivity extends AppCompatActivity {
     }
 
     private void initValues() {
-        buyNowBTN = (LinearLayout) findViewById(R.id.full_fish_buy_btn);
-        fish_pic = (ImageView) findViewById(R.id.full_fish_pic);
-        fish_name = (TextView) findViewById(R.id.full_fish_name);
-        fish_price = (TextView) findViewById(R.id.full_fish_price);
-        fish_availability = (TextView) findViewById(R.id.full_fish_availability);
-        fish_time = (TextView) findViewById(R.id.full_fish_time);
-        seller_name = (TextView) findViewById(R.id.full_fish_seller_name);
-        fish_qty = (TextView) findViewById(R.id.full_fish_qty);
+        buyNowBTN = findViewById(R.id.full_fish_buy_btn);
+        fish_pic = findViewById(R.id.full_fish_pic);
+        fish_name = findViewById(R.id.full_fish_name);
+        fish_price = findViewById(R.id.full_fish_price);
+        fish_availability = findViewById(R.id.full_fish_availability);
+        fish_time = findViewById(R.id.full_fish_time);
+        seller_name = findViewById(R.id.full_fish_seller_name);
+        fish_qty = findViewById(R.id.full_fish_qty);
         fish_qty.setText("0.0");
-        addBTN = (ImageButton) findViewById(R.id.full_fish_qty_plus);
-        rating = (TextView) findViewById(R.id.full_fish_rating);
-        ratingBar = (RatingBar) findViewById(R.id.full_fish_rating_bar);
-        removeBTN = (ImageButton) findViewById(R.id.full_fish_qty_remove);
+        rating_tv = findViewById(R.id.full_fish_rating_tv);
+        addBTN = findViewById(R.id.full_fish_qty_plus);
+        rating = findViewById(R.id.full_fish_rating);
+        ratingBar = findViewById(R.id.full_fish_rating_bar);
+        removeBTN = findViewById(R.id.full_fish_qty_remove);
         mProgress = new ProgressDialog(this);
         mProgress.setCancelable(false);
 

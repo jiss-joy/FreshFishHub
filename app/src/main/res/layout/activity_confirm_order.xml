@@ -296,24 +296,26 @@
 
     </ScrollView>
 
-
     <LinearLayout
         android:id="@+id/confirm_order_place_order_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
+        android:clickable="true"
+        android:focusable="true"
         android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/ubuntu"
-            android:paddingVertical="10sp"
+            android:paddingVertical="15sp"
             android:text="Place Order"
             android:textColor="@color/color_White"
             android:textSize="20sp"
             android:textStyle="bold" />
+
     </LinearLayout>
 
 </RelativeLayout>

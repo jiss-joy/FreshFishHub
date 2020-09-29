@@ -50,7 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
         phoneNumber_et.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                warning_tv.setVisibility(View.INVISIBLE);
+                warning_tv.setVisibility(View.GONE);
                 return false;
             }
         });
@@ -58,7 +58,7 @@ public class SignUpActivity extends AppCompatActivity {
         email_et.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                warning_tv.setVisibility(View.INVISIBLE);
+                warning_tv.setVisibility(View.GONE);
                 return false;
             }
         });
@@ -66,7 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
         name_et.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                warning_tv.setVisibility(View.INVISIBLE);
+                warning_tv.setVisibility(View.GONE);
                 return false;
             }
         });
@@ -146,11 +146,11 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     private void initValues() {
-        phoneNumber_et = (EditText) findViewById(R.id.sign_up_phone_number);
-        email_et = (EditText) findViewById(R.id.sign_up_email);
-        name_et = (EditText) findViewById(R.id.sign_up_name);
-        next_btn = (ExtendedFloatingActionButton) findViewById(R.id.sign_up_next_btn);
-        warning_tv = (TextView) findViewById(R.id.signup_warning_tv);
+        phoneNumber_et = findViewById(R.id.sign_up_phone_number);
+        email_et = findViewById(R.id.sign_up_email);
+        name_et = findViewById(R.id.sign_up_name);
+        next_btn = findViewById(R.id.sign_up_next_btn);
+        warning_tv = findViewById(R.id.signup_warning_tv);
         warning_tv.setVisibility(View.GONE);
         mProgress = new ProgressDialog(this);
         mProgress.setCancelable(false);
@@ -161,6 +161,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(SignUpActivity.this, AuthenticationBridgeActivity.class));
+        super.onBackPressed();
     }
 }

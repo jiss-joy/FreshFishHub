@@ -44,24 +44,35 @@ public class AdapterShortOrder extends RecyclerView.Adapter<AdapterShortOrder.My
         holder.order_total_price.setText("₹" + totalPrice);
 
         switch (OrderList.get(position).getOrderStatus()) {
-            case "Placed":
+            case "B":
+                holder.order_status.setText("Placed");
                 break;
-            case "Accepted":
-            case "Delivery":
+            case "A":
+                holder.order_status.setText("Accepted");
                 holder.order_status.setTextColor(ContextCompat.getColor(context, R.color.color_dark_orange));
                 holder.order_status.setBackgroundResource(R.drawable.custom_field_orange);
                 break;
-            case "Declined":
-            case "Cancelled":
+            case "C":
+                holder.order_status.setText("Delivery");
+                holder.order_status.setTextColor(ContextCompat.getColor(context, R.color.color_dark_orange));
+                holder.order_status.setBackgroundResource(R.drawable.custom_field_orange);
+                break;
+            case "E":
+                holder.order_status.setText("Declined");
                 holder.order_status.setTextColor(ContextCompat.getColor(context, R.color.color_red));
                 holder.order_status.setBackgroundResource(R.drawable.custom_field_red);
                 break;
-            case "Delivered":
+            case "F":
+                holder.order_status.setText("Cancelled");
+                holder.order_status.setTextColor(ContextCompat.getColor(context, R.color.color_red));
+                holder.order_status.setBackgroundResource(R.drawable.custom_field_red);
+                break;
+            case "D":
+                holder.order_status.setText("Delivered");
                 holder.order_status.setTextColor(ContextCompat.getColor(context, R.color.color_dark_green));
                 holder.order_status.setBackgroundResource(R.drawable.custom_field_green);
                 break;
         }
-        holder.order_status.setText(OrderList.get(position).getOrderStatus());
     }
 
 

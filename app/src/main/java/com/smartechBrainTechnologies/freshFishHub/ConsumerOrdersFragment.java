@@ -51,7 +51,12 @@ public class ConsumerOrdersFragment extends Fragment implements AdapterShortOrde
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_consumer_orders, container, false);
 
-        toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+        mProgress = new ProgressDialog(getContext());
+        mProgress.setCancelable(false);
+        mProgress.setMessage("Please wait...");
+        mProgress.show();
+
+        toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Your Orders");
 
         initValues(view);
@@ -63,14 +68,13 @@ public class ConsumerOrdersFragment extends Fragment implements AdapterShortOrde
 
 
     private void setUpRecycler() {
-        mProgress.setMessage("Please wait...");
-        mProgress.show();
+
         orderRef.orderBy("orderStatus", Query.Direction.ASCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 orderList.clear();
                 Date date = Calendar.getInstance().getTime();
-                DateFormat dateFormat = new SimpleDateFormat("MMM dd, YYYY");
+                DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
                 String currentDate = dateFormat.format(date);
                 for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
                     if (documentSnapshot.getString("orderConsumerID").equals(user.getUid())) {
@@ -92,24 +96,23 @@ public class ConsumerOrdersFragment extends Fragment implements AdapterShortOrde
                     noOrderTV.setText("You do not have any order.\nPlease place a new order in the market now!");
                     noOrderImage.setVisibility(View.VISIBLE);
                     noOrderTV.setVisibility(View.VISIBLE);
+                    mProgress.dismiss();
                 } else {
                     consumerOrderRecycler.setVisibility(View.VISIBLE);
                     mAdapter = new AdapterShortOrder(getContext(), orderList, ConsumerOrdersFragment.this);
                     consumerOrderRecycler.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
+                    mProgress.dismiss();
                 }
             }
         });
-        mProgress.dismiss();
     }
 
     private void initValues(View view) {
-        consumerOrderRecycler = (RecyclerView) view.findViewById(R.id.consumer_order_recycler);
+        consumerOrderRecycler = view.findViewById(R.id.consumer_order_recycler);
         consumerOrderRecycler.setVisibility(View.GONE);
-        mProgress = new ProgressDialog(getContext());
-        mProgress.setCancelable(false);
-        noOrderImage = (ImageView) view.findViewById(R.id.consumer_order_no_orders_image);
-        noOrderTV = (TextView) view.findViewById(R.id.consumer_order_no_orders_tv);
+        noOrderImage = view.findViewById(R.id.consumer_order_no_orders_image);
+        noOrderTV = view.findViewById(R.id.consumer_order_no_orders_tv);
         noOrderTV.setVisibility(View.GONE);
         noOrderImage.setVisibility(View.GONE);
 

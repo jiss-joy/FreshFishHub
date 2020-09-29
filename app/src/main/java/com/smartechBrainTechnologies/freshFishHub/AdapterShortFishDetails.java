@@ -25,8 +25,6 @@ public class AdapterShortFishDetails extends RecyclerView.Adapter<AdapterShortFi
     private ArrayList<ModelShortFishDetails> FishListFull;
     private OnFishSelectedListener onFishSelectedListener;
 
-    private int mPosition;
-
     public AdapterShortFishDetails(Context context, ArrayList<ModelShortFishDetails> fishList, OnFishSelectedListener onFishSelectedListener) {
         this.context = context;
         this.FishList = fishList;
@@ -54,7 +52,6 @@ public class AdapterShortFishDetails extends RecyclerView.Adapter<AdapterShortFi
 
     @Override
     public int getItemViewType(int position) {
-        mPosition = position;
         return super.getItemViewType(position);
     }
 
@@ -69,7 +66,6 @@ public class AdapterShortFishDetails extends RecyclerView.Adapter<AdapterShortFi
             List<ModelShortFishDetails> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
-//                filteredList.addAll(FishListFull);
                 filteredList.clear();
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
@@ -82,8 +78,10 @@ public class AdapterShortFishDetails extends RecyclerView.Adapter<AdapterShortFi
             }
 
             FilterResults results = new FilterResults();
-            if (filteredList.isEmpty()) {
-//                Toast.makeText(context, "No matches Found", Toast.LENGTH_SHORT).show();
+            if (filteredList.isEmpty() && constraint == null) {
+
+            } else if (filteredList.isEmpty()) {
+                Toast.makeText(context, "No matches Found", Toast.LENGTH_SHORT).show();
             }
 
             results.values = filteredList;

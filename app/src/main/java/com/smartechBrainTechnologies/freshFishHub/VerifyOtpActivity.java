@@ -83,7 +83,7 @@ public class VerifyOtpActivity extends AppCompatActivity {
 
                     @Override
                     public void onVerificationFailed(@NonNull FirebaseException e) {
-                        Toast.makeText(VerifyOtpActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(VerifyOtpActivity.this, "Verification failed", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(VerifyOtpActivity.this, AuthenticationBridgeActivity.class));
                     }
 
@@ -136,7 +136,7 @@ public class VerifyOtpActivity extends AppCompatActivity {
                 deviceTokenRef.child(currentUserID).child("deviceToken").setValue(token).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             userData.clear();
                             userData.put("userPhone", mPhoneNumber);
                             userData.put("userType", mUserType);
@@ -178,7 +178,6 @@ public class VerifyOtpActivity extends AppCompatActivity {
                         .setSmallIcon(R.drawable.fish)
                         .setContentTitle("Hey " + mName + "!")
                         .setContentText("Welcome to the Fresh Fish Community.")
-                        .setSubText("Order now and get fresh fish delivered right to you door!.")
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat mNotificationMgr = NotificationManagerCompat.from(this);
@@ -188,10 +187,10 @@ public class VerifyOtpActivity extends AppCompatActivity {
 
 
     private void initValues() {
-        otp_et = (EditText) findViewById(R.id.verify_otp);
-        submitBTN = (ExtendedFloatingActionButton) findViewById(R.id.verify_submit_btn);
-        verify_text = (TextView) findViewById(R.id.verify_tv_2);
-        verify_text.setText("OTP sent to " + mPhoneNumber);
+        otp_et = findViewById(R.id.verify_otp);
+        submitBTN = findViewById(R.id.verify_submit_btn);
+        verify_text = findViewById(R.id.verify_tv_2);
+        verify_text.setText("An OTP has been sent to " + mPhoneNumber);
         mProgress = new ProgressDialog(this);
 
         db = FirebaseFirestore.getInstance();
@@ -204,6 +203,7 @@ public class VerifyOtpActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        finish();
         startActivity(new Intent(VerifyOtpActivity.this, AuthenticationBridgeActivity.class));
     }
 }

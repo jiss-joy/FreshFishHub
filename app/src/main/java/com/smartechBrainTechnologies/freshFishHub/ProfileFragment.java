@@ -35,7 +35,7 @@ public class ProfileFragment extends Fragment {
     private TextView addressBTN, pastOrdersBTN, contactUsBTN, tosBTN, privacyBTN;
     private ProgressDialog mProgress;
     private ImageButton editBTN;
-    private TextView toolbarTitle;
+    private TextView toolbarTitle, version;
 
 
     private FirebaseFirestore db;
@@ -50,7 +50,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
+        toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Profile");
 
         initValues(view);
@@ -128,8 +128,8 @@ public class ProfileFragment extends Fragment {
         dialog.setContentView(R.layout.pop_up_logout);
         Window window = dialog.getWindow();
         window.setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        ExtendedFloatingActionButton confirm_btn = (ExtendedFloatingActionButton) dialog.findViewById(R.id.logout_confirm);
-        ExtendedFloatingActionButton cancel_btn = (ExtendedFloatingActionButton) dialog.findViewById(R.id.logout_cancel);
+        ExtendedFloatingActionButton confirm_btn = dialog.findViewById(R.id.logout_confirm);
+        ExtendedFloatingActionButton cancel_btn = dialog.findViewById(R.id.logout_cancel);
         confirm_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,23 +163,27 @@ public class ProfileFragment extends Fragment {
     }
 
     private void initValues(View view) {
-        name = (TextView) view.findViewById(R.id.profile_name);
-        number = (TextView) view.findViewById(R.id.profile_number);
-        email = (TextView) view.findViewById(R.id.profile_email);
-        id = (TextView) view.findViewById(R.id.profile_user_id);
-        editBTN = (ImageButton) view.findViewById(R.id.profile_edit_btn);
-        addressBTN = (TextView) view.findViewById(R.id.profile_address_btn);
-        pastOrdersBTN = (TextView) view.findViewById(R.id.profile_past_orders_btn);
-        contactUsBTN = (TextView) view.findViewById(R.id.profile_contact_us_btn);
-        tosBTN = (TextView) view.findViewById(R.id.profile_tos_btn);
-        privacyBTN = (TextView) view.findViewById(R.id.profile_privacy_btn);
-        logOutBTN = (TextView) view.findViewById(R.id.profile_log_out_btn);
+        name = view.findViewById(R.id.profile_name);
+        number = view.findViewById(R.id.profile_number);
+        email = view.findViewById(R.id.profile_email);
+        id = view.findViewById(R.id.profile_user_id);
+        editBTN = view.findViewById(R.id.profile_edit_btn);
+        addressBTN = view.findViewById(R.id.profile_address_btn);
+        pastOrdersBTN = view.findViewById(R.id.profile_past_orders_btn);
+        contactUsBTN = view.findViewById(R.id.profile_contact_us_btn);
+        tosBTN = view.findViewById(R.id.profile_tos_btn);
+        version = view.findViewById(R.id.profile_version);
+        privacyBTN = view.findViewById(R.id.profile_privacy_btn);
+        logOutBTN = view.findViewById(R.id.profile_log_out_btn);
         mProgress = new ProgressDialog(getContext());
         mProgress.setCancelable(false);
+
+        version.setText("Version: " + BuildConfig.VERSION_NAME);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         consumerRef = db.collection("Consumers").document(currentUser.getUid());
     }
+
 }

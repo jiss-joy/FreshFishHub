@@ -1,9 +1,12 @@
 package com.smartechBrainTechnologies.freshFishHub;
 
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.AutoTransition;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -110,7 +113,13 @@ public class SignInActivity extends AppCompatActivity {
                 } else {
                     mProgress.dismiss();
                     Toast.makeText(SignInActivity.this, "No User with this number found\nPlease Sign Up.", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
+                    Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        SignInActivity.this.getWindow().setExitTransition(new AutoTransition());
+                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(SignInActivity.this).toBundle());
+                    } else {
+                        startActivity(intent);
+                    }
                 }
             }
         });
@@ -145,9 +154,9 @@ public class SignInActivity extends AppCompatActivity {
                         dialog.setContentView(R.layout.popup_otp);
                         Window window = dialog.getWindow();
                         window.setLayout(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                        final EditText otp_et = (EditText) dialog.findViewById(R.id.otp);
-                        TextView otp_tv = (TextView) dialog.findViewById(R.id.otp_text);
-                        ExtendedFloatingActionButton submitBTN = (ExtendedFloatingActionButton) dialog.findViewById(R.id.otp_next);
+                        final EditText otp_et = dialog.findViewById(R.id.otp);
+                        TextView otp_tv = dialog.findViewById(R.id.otp_text);
+                        ExtendedFloatingActionButton submitBTN = dialog.findViewById(R.id.otp_next);
                         submitBTN.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -209,9 +218,9 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void initValues() {
-        phoneNumber_et = (EditText) findViewById(R.id.sign_in_phone_number);
-        nextBTN = (ExtendedFloatingActionButton) findViewById(R.id.sign_in_next_btn);
-        warning_tv = (TextView) findViewById(R.id.signin_warning_tv);
+        phoneNumber_et = findViewById(R.id.sign_in_phone_number);
+        nextBTN = findViewById(R.id.sign_in_next_btn);
+        warning_tv = findViewById(R.id.signin_warning_tv);
         warning_tv.setVisibility(View.GONE);
         mProgress = new ProgressDialog(this);
         mProgress.setCancelable(false);
@@ -222,5 +231,10 @@ public class SignInActivity extends AppCompatActivity {
         consumerReference = db.collection("Consumers");
         fb = FirebaseDatabase.getInstance();
         deviceTokenRef = fb.getReference().child("Device Tokens");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

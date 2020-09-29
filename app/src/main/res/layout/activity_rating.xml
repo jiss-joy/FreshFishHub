@@ -14,6 +14,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/rating_submit"
         android:layout_below="@id/rating_toolbar">
 
         <LinearLayout
@@ -25,7 +26,6 @@
                 android:id="@+id/rating_image"
                 android:layout_width="match_parent"
                 android:layout_height="250sp"
-                android:layout_marginTop="30sp"
                 app:lottie_autoPlay="true"
                 app:lottie_rawRes="@raw/order_placed" />
 
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="20sp"
-                android:layout_marginTop="25sp"
+                android:layout_marginTop="15sp"
                 android:fontFamily="@font/ubuntu"
                 android:gravity="center"
                 android:text="Your order was delivered successfully!"
@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14sp"
-                android:layout_marginTop="45sp"
+                android:layout_marginTop="35sp"
                 android:fontFamily="@font/ubuntu"
                 android:text="Rate Us"
                 android:textColor="@color/color_black"
@@ -94,7 +94,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20sp"
                 android:fontFamily="@font/ubuntu"
-                android:text="Rating Response"
                 android:textSize="20sp" />
 
         </LinearLayout>
@@ -111,7 +110,7 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
-        android:paddingVertical="10sp"
+        android:paddingVertical="15sp"
         app:elevation="6sp">
 
         <TextView

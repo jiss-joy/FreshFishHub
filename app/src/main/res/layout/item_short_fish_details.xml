@@ -27,7 +27,7 @@
             android:layout_below="@id/short_fish_details_pic"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8sp"
-            android:fontFamily="@font/lato"
+            android:fontFamily="@font/ubuntu"
             android:text="FISH NAME"
             android:textColor="@color/color_black"
             android:textSize="16sp"
@@ -41,7 +41,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5sp"
             android:layout_marginBottom="8sp"
-            android:fontFamily="@font/lato"
+            android:fontFamily="@font/ubuntu"
             android:text="FISH PRICE"
             android:textColor="@color/color_black" />
 

@@ -31,6 +31,7 @@ public class RatingActivity extends AppCompatActivity {
     private String fishID;
     private int fishType;
     private float r;
+    private int tempRating;
 
     private FirebaseFirestore db;
     private CollectionReference fishPostRef;
@@ -42,7 +43,7 @@ public class RatingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating);
 
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Order Successful");
 
         Intent intent = getIntent();
@@ -56,7 +57,7 @@ public class RatingActivity extends AppCompatActivity {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 
                 r = rating;
-                int tempRating = (int) rating;
+                tempRating = (int) r;
                 String message = null;
 
                 switch (tempRating) {
@@ -78,6 +79,7 @@ public class RatingActivity extends AppCompatActivity {
                 }
                 rating_tv.setText(String.valueOf(rating));
                 rating_response.setText(message);
+                rating_response.requestFocus();
                 ratingBar.setRating(rating);
             }
         });
@@ -107,6 +109,8 @@ public class RatingActivity extends AppCompatActivity {
                         float totalRating = Float.parseFloat(fishPostTotalScore);
                         totalRating = totalRating + r;
                         float rating = totalRating / number;
+                        rating = rating * 2;
+                        rating = (float) Math.ceil(rating) / 2;
                         String fishRating = String.valueOf(rating);
                         orderDetails.put("fishPostRating", fishRating);
                         orderDetails.put("fishPostOrderNumbers", String.valueOf(number));
@@ -138,6 +142,8 @@ public class RatingActivity extends AppCompatActivity {
                         float totalRating = Float.parseFloat(fishPostTotalScore);
                         totalRating = totalRating + r;
                         float rating = totalRating / number;
+                        rating = rating * 2;
+                        rating = (float) Math.ceil(rating) / 2;
                         String fishRating = String.valueOf(rating);
                         orderDetails.put("fishPostRating", fishRating);
                         orderDetails.put("fishPostOrderNumbers", String.valueOf(number));
@@ -159,11 +165,11 @@ public class RatingActivity extends AppCompatActivity {
     }
 
     private void initValues() {
-        ratingBar = (RatingBar) findViewById(R.id.rating_bar);
-        submitLayout = (LinearLayout) findViewById(R.id.rating_submit);
-        rating_tv = (TextView) findViewById(R.id.rating);
-        rating_response = (TextView) findViewById(R.id.rating_response);
-        ratingBar.setRating(0);
+        ratingBar = findViewById(R.id.rating_bar);
+        submitLayout = findViewById(R.id.rating_submit);
+        rating_tv = findViewById(R.id.rating);
+        rating_response = findViewById(R.id.rating_response);
+        ratingBar.setRating(3);
         mProgress = new ProgressDialog(this);
         mProgress.setCancelable(false);
 
