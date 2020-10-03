@@ -101,8 +101,8 @@ public class SearchEngineActivity extends AppCompatActivity implements AdapterSh
     }
 
     private void initValues() {
-        searchRecycler = (RecyclerView) findViewById(R.id.search_recycler);
-        searchView = (FloatingSearchView) findViewById(R.id.floating_search_view);
+        searchRecycler = findViewById(R.id.search_recycler);
+        searchView = findViewById(R.id.floating_search_view);
 
         db = FirebaseFirestore.getInstance();
         fishPostRef = db.collection("Fish Posts");

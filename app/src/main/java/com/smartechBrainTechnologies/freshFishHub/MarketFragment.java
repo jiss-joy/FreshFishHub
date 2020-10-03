@@ -155,17 +155,17 @@ public class MarketFragment extends Fragment implements AdapterShortFishDetails.
     }
 
     private void initValues(View view) {
-        marketRecycler = (RecyclerView) view.findViewById(R.id.market_recycler);
-        bestDealsRecycler = (RecyclerView) view.findViewById(R.id.best_deals_recycler);
+        marketRecycler = view.findViewById(R.id.market_recycler);
+        bestDealsRecycler = view.findViewById(R.id.best_deals_recycler);
         marketRecycler.setVisibility(View.GONE);
         bestDealsRecycler.setVisibility(View.GONE);
         mProgress = new ProgressDialog(getContext());
         mProgress.setCancelable(false);
-        searchBar = (ExtendedFloatingActionButton) view.findViewById(R.id.market_search_bar);
-        noBestDeals = (ImageView) view.findViewById(R.id.market_no_best_deals_image);
-        noNormalDeals = (ImageView) view.findViewById(R.id.market_no_normal_deals_image);
-        noBestTV = (TextView) view.findViewById(R.id.market_no_best_deals_tv);
-        noNormalTV = (TextView) view.findViewById(R.id.market_no_normal_deals__tv);
+        searchBar = view.findViewById(R.id.market_search_bar);
+        noBestDeals = view.findViewById(R.id.market_no_best_deals_image);
+        noNormalDeals = view.findViewById(R.id.market_no_normal_deals_image);
+        noBestTV = view.findViewById(R.id.market_no_best_deals_tv);
+        noNormalTV = view.findViewById(R.id.market_no_normal_deals__tv);
         noNormalDeals.setVisibility(View.GONE);
         noNormalTV.setVisibility(View.GONE);
         noBestTV.setVisibility(View.GONE);

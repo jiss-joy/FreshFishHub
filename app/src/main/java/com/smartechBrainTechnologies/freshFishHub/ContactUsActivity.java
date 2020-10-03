@@ -48,10 +48,10 @@ public class ContactUsActivity extends AppCompatActivity {
     }
 
     private void initValues() {
-        name = (TextView) findViewById(R.id.contact_us_name);
-        number1 = (TextView) findViewById(R.id.contact_us_number1);
-        number2 = (TextView) findViewById(R.id.contact_us_number2);
-        email = (TextView) findViewById(R.id.contact_us_email);
+        name = findViewById(R.id.contact_us_name);
+        number1 = findViewById(R.id.contact_us_number1);
+        number2 = findViewById(R.id.contact_us_number2);
+        email = findViewById(R.id.contact_us_email);
 
         db = FirebaseFirestore.getInstance();
         contactUsRef = db.collection("Sellers").document("Contact Us");

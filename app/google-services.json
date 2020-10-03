@@ -52,11 +52,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "1049303112838-83tco8o93tennkcendrgrl8oe7dbhbas.apps.googleusercontent.com",
+          "client_id": "1049303112838-m9spebjd1dr7g59d34sgm1fmt0dn2rar.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.smartechbraintechnologies.freshfishbusiness",
-            "certificate_hash": "75ef2d9e913728d6c0f21a1596dcc571e0348fef"
+            "certificate_hash": "5833f323abe1d2f38c7f2109ab2541daf3f5c027"
           }
         },
         {

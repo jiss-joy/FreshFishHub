@@ -8,8 +8,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.airbnb.lottie.LottieAnimationView;
-
 public class OrderPlacedActivity extends AppCompatActivity {
 
     private TextView toolbarTitle;
@@ -20,10 +18,10 @@ public class OrderPlacedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_placed);
 
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Order Placed");
 
-        linearLayout = (LinearLayout) findViewById(R.id.order_placed_goToMarket);
+        linearLayout = findViewById(R.id.order_placed_goToMarket);
 
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override

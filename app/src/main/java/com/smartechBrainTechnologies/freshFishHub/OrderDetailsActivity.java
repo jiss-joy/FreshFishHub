@@ -202,7 +202,12 @@ public class OrderDetailsActivity extends AppCompatActivity {
                         name.setText(documentSnapshot.getString("addressName"));
                         building.setText(documentSnapshot.getString("addressBuilding"));
                         area.setText(documentSnapshot.getString("addressArea"));
-                        landmark.setText(documentSnapshot.getString("addressLandmark"));
+                        if (documentSnapshot.getString("addressLandmark").equals("")) {
+                            landmark.setVisibility(View.GONE);
+                        } else {
+                            landmark.setVisibility(View.VISIBLE);
+                            landmark.setText(documentSnapshot.getString("addressLandmark"));
+                        }
                         city.setText(documentSnapshot.getString("addressCity"));
                         pin.setText(documentSnapshot.getString("addressPin"));
                     }
@@ -266,10 +271,10 @@ public class OrderDetailsActivity extends AppCompatActivity {
                         break;
                 }
                 fName.setText(value.getString("orderFishName"));
-                fQty.setText(value.getString("orderFishQty"));
-                fPrice.setText(value.getString("orderFishPrice"));
+                fQty.setText(value.getString("orderFishQty") + "KG");
+                fPrice.setText("₹" + value.getString("orderFishPrice"));
                 String total = String.valueOf(Float.parseFloat(value.getString("orderFishQty")) * Float.parseFloat(value.getString("orderFishPrice")));
-                totalPrice.setText(total);
+                totalPrice.setText("₹" + total);
                 order_ID.setText(value.getId());
                 time.setText("On " + value.getString("orderDate") + " at " + value.getString("orderTime"));
             }

@@ -117,11 +117,11 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void initValues() {
-        name_et = (EditText) findViewById(R.id.edit_profile_name);
-        phone_et = (EditText) findViewById(R.id.edit_profile_phone);
-        email_et = (EditText) findViewById(R.id.edit_profile_email);
-        submitBTN = (ExtendedFloatingActionButton) findViewById(R.id.edit_profile_next);
-        warning_tv = (TextView) findViewById(R.id.edit_profile_warning_tv);
+        name_et = findViewById(R.id.edit_profile_name);
+        phone_et = findViewById(R.id.edit_profile_phone);
+        email_et = findViewById(R.id.edit_profile_email);
+        submitBTN = findViewById(R.id.edit_profile_next);
+        warning_tv = findViewById(R.id.edit_profile_warning_tv);
         warning_tv.setVisibility(View.GONE);
         mProgress = new ProgressDialog(this);
 

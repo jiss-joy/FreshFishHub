@@ -1,43 +1,28 @@
 package com.smartechBrainTechnologies.freshFishHub;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.AutoTransition;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthProvider;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
-
-import java.util.concurrent.TimeUnit;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -48,13 +33,9 @@ public class SignInActivity extends AppCompatActivity {
 
     private String phoneNumber;
     private FirebaseFirestore db;
-    private FirebaseDatabase fb;
     private CollectionReference userRef;
-    private CollectionReference consumerReference;
-    private DatabaseReference deviceTokenRef;
-    private FirebaseAuth mAuth;
-    private String currentUserID;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +47,15 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 warning_tv.setVisibility(View.GONE);
+            }
+        });
+
+        phoneNumber_et.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                warning_tv.setVisibility(View.GONE);
+                return false;
             }
         });
 
@@ -106,10 +96,11 @@ public class SignInActivity extends AppCompatActivity {
                 }
 
                 if (flag && !sellerFlag) {
-                    sendOTP();
+                    startActivity(new Intent(SignInActivity.this, VerifySignInActivity.class).putExtra("PHONE NUMBER", phoneNumber));
                 } else if (sellerFlag) {
                     mProgress.dismiss();
-                    Toast.makeText(SignInActivity.this, "Please sign in with the Business App", Toast.LENGTH_LONG).show();
+                    warning_tv.setText("PLEASE SIGN IN WITH THE BUSINESS APP");
+                    warning_tv.setVisibility(View.VISIBLE);
                 } else {
                     mProgress.dismiss();
                     Toast.makeText(SignInActivity.this, "No User with this number found\nPlease Sign Up.", Toast.LENGTH_SHORT).show();
@@ -126,97 +117,6 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
-
-    private void sendOTP() {
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                "+91" + phoneNumber,        // Phone number to verify
-                60,                 // Timeout duration
-                TimeUnit.SECONDS,   // Unit of timeout
-                this,               // Activity (for callback binding)
-                // OnVerificationStateChangedCallbacks
-                new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                    @Override
-                    public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-                        signInUser(phoneAuthCredential);
-                    }
-
-                    @Override
-                    public void onVerificationFailed(@NonNull FirebaseException e) {
-                        Toast.makeText(SignInActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(SignInActivity.this, AuthenticationBridgeActivity.class));
-                    }
-
-
-                    @Override
-                    public void onCodeSent(@NonNull final String sentOTP, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                        super.onCodeSent(sentOTP, forceResendingToken);
-                        final Dialog dialog = new Dialog(SignInActivity.this);
-                        dialog.setContentView(R.layout.popup_otp);
-                        Window window = dialog.getWindow();
-                        window.setLayout(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                        final EditText otp_et = dialog.findViewById(R.id.otp);
-                        TextView otp_tv = dialog.findViewById(R.id.otp_text);
-                        ExtendedFloatingActionButton submitBTN = dialog.findViewById(R.id.otp_next);
-                        submitBTN.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String userOTP = otp_et.getText().toString();
-                                if (userOTP.isEmpty()) {
-                                    Toast.makeText(SignInActivity.this, "Please enter OTP", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    dialog.dismiss();
-                                    mProgress.setMessage("Authenticating...");
-                                    mProgress.show();
-                                    PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(sentOTP, userOTP);
-                                    signInUser(phoneAuthCredential);
-                                }
-                            }
-                        });
-                        otp_tv.setText("We have sent an OTP to +91-" + phoneNumber);
-                        mProgress.dismiss();
-                        dialog.show();
-                    }
-                });
-    }
-
-    private void signInUser(PhoneAuthCredential phoneAuthCredential) {
-        FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            updateData();
-                        } else {
-                            mProgress.dismiss();
-                            Toast.makeText(SignInActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
-    private void updateData() {
-        currentUserID = mAuth.getCurrentUser().getUid();
-        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-            @Override
-            public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                if (task.isSuccessful()) {
-                    String token = task.getResult().getToken();
-                    deviceTokenRef.child(currentUserID).child("deviceToken").setValue(token).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                mProgress.dismiss();
-                                Toast.makeText(SignInActivity.this, "Welcome back", Toast.LENGTH_SHORT).show();
-                                finish();
-                                startActivity(new Intent(SignInActivity.this, MainActivity.class));
-                            }
-                        }
-                    });
-                }
-            }
-        });
-    }
-
     private void initValues() {
         phoneNumber_et = findViewById(R.id.sign_in_phone_number);
         nextBTN = findViewById(R.id.sign_in_next_btn);
@@ -226,11 +126,7 @@ public class SignInActivity extends AppCompatActivity {
         mProgress.setCancelable(false);
 
         db = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
         userRef = db.collection("Users");
-        consumerReference = db.collection("Consumers");
-        fb = FirebaseDatabase.getInstance();
-        deviceTokenRef = fb.getReference().child("Device Tokens");
     }
 
     @Override

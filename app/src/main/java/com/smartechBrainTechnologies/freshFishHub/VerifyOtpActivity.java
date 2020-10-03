@@ -83,7 +83,7 @@ public class VerifyOtpActivity extends AppCompatActivity {
 
                     @Override
                     public void onVerificationFailed(@NonNull FirebaseException e) {
-                        Toast.makeText(VerifyOtpActivity.this, "Verification failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(VerifyOtpActivity.this, "Too many attempts detected.\n Please try again later", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(VerifyOtpActivity.this, AuthenticationBridgeActivity.class));
                     }
 
@@ -141,26 +141,21 @@ public class VerifyOtpActivity extends AppCompatActivity {
                             userData.put("userPhone", mPhoneNumber);
                             userData.put("userType", mUserType);
                             userData.put("userName", mName);
-                            userRef.document(currentUserID).set(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            userRef.document(currentUserID).set(userData);
+
+                            userData.clear();
+                            userData.put("consumerID", currentUserID);
+                            userData.put("consumerName", mName);
+                            userData.put("consumerPhone", mPhoneNumber);
+                            userData.put("consumerEmail", mEmail);
+                            consumerRef.document(currentUserID).set(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        userData.clear();
-                                        userData.put("consumerID", currentUserID);
-                                        userData.put("consumerName", mName);
-                                        userData.put("consumerPhone", mPhoneNumber);
-                                        userData.put("consumerEmail", mEmail);
-                                        consumerRef.document(currentUserID).set(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    finish();
-                                                    sendWelcomeNotification();
-                                                    Toast.makeText(VerifyOtpActivity.this, "Welcome " + mName, Toast.LENGTH_SHORT).show();
-                                                    startActivity(new Intent(VerifyOtpActivity.this, MainActivity.class));
-                                                }
-                                            }
-                                        });
+                                        finish();
+                                        sendWelcomeNotification();
+                                        Toast.makeText(VerifyOtpActivity.this, "Welcome " + mName, Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(VerifyOtpActivity.this, MainActivity.class));
                                     }
                                 }
                             });
@@ -192,6 +187,7 @@ public class VerifyOtpActivity extends AppCompatActivity {
         verify_text = findViewById(R.id.verify_tv_2);
         verify_text.setText("An OTP has been sent to " + mPhoneNumber);
         mProgress = new ProgressDialog(this);
+        mProgress.setCancelable(false);
 
         db = FirebaseFirestore.getInstance();
         fb = FirebaseDatabase.getInstance();

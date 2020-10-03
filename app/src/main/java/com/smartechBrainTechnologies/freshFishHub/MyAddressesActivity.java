@@ -51,7 +51,7 @@ public class MyAddressesActivity extends AppCompatActivity implements AdapterAdd
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_addresses);
 
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText("My Addresses");
 
         initValues();
@@ -107,13 +107,13 @@ public class MyAddressesActivity extends AppCompatActivity implements AdapterAdd
     }
 
     private void initValues() {
-        addressRecycler = (RecyclerView) findViewById(R.id.my_addresses_recycler);
-        addAddressBTN = (ExtendedFloatingActionButton) findViewById(R.id.my_addresses_add_btn);
+        addressRecycler = findViewById(R.id.my_addresses_recycler);
+        addAddressBTN = findViewById(R.id.my_addresses_add_btn);
         addAddressBTN.shrink();
         mProgress = new ProgressDialog(this);
         mProgress.setCancelable(false);
-        noAddressTV = (TextView) findViewById(R.id.my_addresses_no_address_tv);
-        noAddressImage = (ImageView) findViewById(R.id.my_addresses_no_address_image);
+        noAddressTV = findViewById(R.id.my_addresses_no_address_tv);
+        noAddressImage = findViewById(R.id.my_addresses_no_address_image);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
