@@ -3,8 +3,11 @@
     package="com.smartechBrainTechnologies.freshFishHub">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
+        android:name=".MyApp"
         android:allowBackup="true"
         android:configChanges="orientation|screenSize"
         android:hardwareAccelerated="true"
@@ -14,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".VerifySignInActivity"></activity>
+        <activity android:name=".NoNetworkActivity" />
+        <activity android:name=".VerifySignInActivity" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".OrderPlacedActivity" />
         <activity android:name=".RatingActivity" />
@@ -42,9 +46,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
     </application>
 
 </manifest>

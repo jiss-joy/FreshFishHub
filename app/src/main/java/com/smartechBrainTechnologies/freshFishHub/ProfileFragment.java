@@ -26,9 +26,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ProfileFragment extends Fragment {
 
     private TextView name, number, id, email, logOutBTN;
@@ -37,13 +34,10 @@ public class ProfileFragment extends Fragment {
     private ImageButton editBTN;
     private TextView toolbarTitle, version;
 
-
     private FirebaseFirestore db;
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     private DocumentReference consumerRef;
-    private Map<String, Object> user = new HashMap<>();
-
 
     @Nullable
     @Override
@@ -115,14 +109,6 @@ public class ProfileFragment extends Fragment {
 
     }
 
-
-    private void updateData(String name, String email) {
-        user.put("consumerName", name);
-        user.put("consumerEmail", email);
-        consumerRef.update(user);
-        mProgress.dismiss();
-    }
-
     private void confirm() {
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.pop_up_logout);
@@ -152,12 +138,14 @@ public class ProfileFragment extends Fragment {
         consumerRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                DocumentSnapshot documentSnapshot = task.getResult();
-                name.setText(documentSnapshot.getString("consumerName"));
-                number.setText(documentSnapshot.getString("consumerPhone"));
-                email.setText(documentSnapshot.getString("consumerEmail"));
-                id.setText("ID: " + documentSnapshot.getString("consumerID"));
-                mProgress.dismiss();
+                if (task.isSuccessful()) {
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    name.setText(documentSnapshot.getString("consumerName"));
+                    number.setText(documentSnapshot.getString("consumerPhone"));
+                    email.setText(documentSnapshot.getString("consumerEmail"));
+                    id.setText("ID: " + documentSnapshot.getString("consumerID"));
+                    mProgress.dismiss();
+                }
             }
         });
     }

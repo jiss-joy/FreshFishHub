@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/no_network_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NoNetworkActivity">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="10sp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="10sp">
+
+        <ImageView
+            android:layout_width="150sp"
+            android:layout_height="150sp"
+            android:layout_marginTop="30sp"
+            android:src="@drawable/no_network" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40sp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:text="Oops, you are offline!"
+            android:textColor="@color/color_red"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:text="Check your internet connection and try again"
+            android:textColor="@color/color_black"
+            android:textSize="18sp" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/no_network_retry_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50sp"
+            android:layout_marginBottom="30sp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:paddingStart="20sp"
+            android:paddingEnd="20sp"
+            android:text="TRY AGAIN"
+            android:textColor="@color/color_White"
+            android:textStyle="bold"
+            app:backgroundTint="@color/colorPrimary"
+            app:icon="@drawable/retry"
+            app:iconGravity="start"
+            app:iconTint="@color/color_White" />
+
+    </LinearLayout>
+
+</RelativeLayout>
