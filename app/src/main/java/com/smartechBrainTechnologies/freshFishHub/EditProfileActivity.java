@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    private EditText name_et, phone_et, email_et;
+    private final Map<String, Object> user = new HashMap<>();
     private TextView warning_tv;
     private ExtendedFloatingActionButton submitBTN;
     private ProgressDialog mProgress;
@@ -36,7 +36,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private CollectionReference consumerRef;
     private CollectionReference userRef;
-    private Map<String, Object> user = new HashMap<>();
+    private EditText name_et, phone_et;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -57,24 +57,12 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-        email_et.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                warning_tv.setVisibility(View.GONE);
-                return false;
-            }
-        });
-
         submitBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 name = name_et.getText().toString();
-                email = email_et.getText().toString();
                 if (name.isEmpty()) {
                     warning_tv.setText("Name cannot be empty.");
-                    warning_tv.setVisibility(View.VISIBLE);
-                } else if (email.isEmpty()) {
-                    warning_tv.setText("Email cannot be empty.");
                     warning_tv.setVisibility(View.VISIBLE);
                 } else {
                     mProgress.setMessage("Updating User Details ...");
@@ -109,7 +97,6 @@ public class EditProfileActivity extends AppCompatActivity {
                     name_et.setText(task.getResult().getString("consumerName"));
                     phone_et.setText(task.getResult().getString("consumerPhone"));
                     phone_et.setEnabled(false);
-                    email_et.setText(task.getResult().getString("consumerEmail"));
                     mProgress.dismiss();
                 }
             }
@@ -119,7 +106,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private void initValues() {
         name_et = findViewById(R.id.edit_profile_name);
         phone_et = findViewById(R.id.edit_profile_phone);
-        email_et = findViewById(R.id.edit_profile_email);
         submitBTN = findViewById(R.id.edit_profile_next);
         warning_tv = findViewById(R.id.edit_profile_warning_tv);
         warning_tv.setVisibility(View.GONE);

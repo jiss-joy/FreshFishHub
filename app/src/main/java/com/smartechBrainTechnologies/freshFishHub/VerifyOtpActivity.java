@@ -47,8 +47,8 @@ public class VerifyOtpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private CollectionReference userRef, consumerRef;
     private DatabaseReference deviceTokenRef;
-    private String mPhoneNumber, mEmail, mName, mUserType;
-    private Map<String, Object> userData = new HashMap<>();
+    private final Map<String, Object> userData = new HashMap<>();
+    private String mPhoneNumber, mName, mUserType;
 
 
     @Override
@@ -58,7 +58,6 @@ public class VerifyOtpActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         mPhoneNumber = intent.getStringExtra("PHONE NUMBER");
-        mEmail = intent.getStringExtra("EMAIL");
         mName = intent.getStringExtra("NAME");
         mUserType = intent.getStringExtra("USER TYPE");
 
@@ -107,10 +106,17 @@ public class VerifyOtpActivity extends AppCompatActivity {
                             }
                         });
                     }
+
+                    @Override
+                    public void onCodeAutoRetrievalTimeOut(@NonNull String s) {
+                        super.onCodeAutoRetrievalTimeOut(s);
+                    }
+
+
                 });
     }
 
-    private void signInUser(PhoneAuthCredential phoneAuthCredential) {
+    private void signInUser(final PhoneAuthCredential phoneAuthCredential) {
         FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -147,7 +153,6 @@ public class VerifyOtpActivity extends AppCompatActivity {
                             userData.put("consumerID", currentUserID);
                             userData.put("consumerName", mName);
                             userData.put("consumerPhone", mPhoneNumber);
-                            userData.put("consumerEmail", mEmail);
                             consumerRef.document(currentUserID).set(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {

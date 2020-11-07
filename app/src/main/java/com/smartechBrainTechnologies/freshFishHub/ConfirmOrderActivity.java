@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,7 +46,8 @@ import java.util.Random;
 
 public class ConfirmOrderActivity extends AppCompatActivity {
 
-    private TextView fishName, availability, price, qty, total, name, building, area, landmark, city, pin, status, noAddress, toolbarTitle;
+    public static float DELIVERY_CHARGE;
+    private final Map<String, String> orderAddress = new HashMap<>();
     private LinearLayout placeOrderBTN;
     private ProgressDialog mProgress;
     private ImageButton optionsBTN;
@@ -67,8 +69,9 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private String fishNewPrice;
     private int dealType;
     private String orderTotal;
-    private Map<String, String> orderAddress = new HashMap<>();
-    private Map<String, String> orderDetails = new HashMap<>();
+    private final Map<String, String> orderDetails = new HashMap<>();
+    private TextView fishName, availability, price, qty, total, name, address, contact, status,
+            address_delivery_status, noAddress, toolbarTitle, delivery_charge_tv, delivery_charge, total_tv;
     private boolean addressFlag = false;
 
     @Override
@@ -122,7 +125,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                     }
                 });
                 if (addressFlag) {
-                    noAddress.setTextColor(getResources().getColor(R.color.color_torquise));
+                    noAddress.setTextColor(getResources().getColor(R.color.color_red));
+                    Toast.makeText(ConfirmOrderActivity.this, "Please add an address to continue.", Toast.LENGTH_LONG).show();
                 } else {
                     if (dealType == 1) {
                         placeBestOrder();
@@ -143,6 +147,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         });
 
     }
+
 
     private void checkForDeal() {
         fishPostRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -192,6 +197,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 orderDetails.put("orderFishName", documentSnapshot.getString("fishName"));
                 orderDetails.put("orderDate", currentDate);
                 orderDetails.put("orderTime", currentTime);
+                orderDetails.put("deliveryCharge", String.valueOf(DELIVERY_CHARGE));
                 orderDetails.put("orderDeliveryCode", deliveryCode);
                 orderRef.add(orderDetails).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
@@ -202,14 +208,11 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments()) {
                                     if (documentSnapshot.getString("addressStatus").equals("Default")) {
-                                        orderAddress.put("addressArea", documentSnapshot.getString("addressArea"));
-                                        orderAddress.put("addressBuilding", documentSnapshot.getString("addressBuilding"));
-                                        orderAddress.put("addressCity", documentSnapshot.getString("addressCity"));
-                                        orderAddress.put("addressCountry", documentSnapshot.getString("addressCountry"));
-                                        orderAddress.put("addressLandmark", documentSnapshot.getString("addressLandmark"));
                                         orderAddress.put("addressName", documentSnapshot.getString("addressName"));
-                                        orderAddress.put("addressPin", documentSnapshot.getString("addressPin"));
-                                        orderAddress.put("addressState", documentSnapshot.getString("addressState"));
+                                        orderAddress.put("address", documentSnapshot.getString("address"));
+                                        orderAddress.put("addressContact", documentSnapshot.getString("addressContact"));
+                                        orderAddress.put("addressLatitude", documentSnapshot.getString("addressLatitude"));
+                                        orderAddress.put("addressLongitude", documentSnapshot.getString("addressLongitude"));
                                         orderAddress.put("addressID", documentSnapshot.getId());
                                         orderRef.document(orderID).collection("Order Address").document(documentSnapshot.getId()).set(orderAddress)
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -267,6 +270,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 orderDetails.put("orderFishName", documentSnapshot1.getString("fishName"));
                 orderDetails.put("orderDate", currentDate);
                 orderDetails.put("orderTime", currentTime);
+                orderDetails.put("deliveryCharge", String.valueOf(DELIVERY_CHARGE));
                 orderDetails.put("orderDeliveryCode", deliveryCode);
                 orderRef.add(orderDetails).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
@@ -277,14 +281,11 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 for (final DocumentSnapshot documentSnapshot2 : task.getResult().getDocuments()) {
                                     if (documentSnapshot2.getString("addressStatus").equals("Default")) {
-                                        orderAddress.put("addressArea", documentSnapshot2.getString("addressArea"));
-                                        orderAddress.put("addressBuilding", documentSnapshot2.getString("addressBuilding"));
-                                        orderAddress.put("addressCity", documentSnapshot2.getString("addressCity"));
-                                        orderAddress.put("addressCountry", documentSnapshot2.getString("addressCountry"));
-                                        orderAddress.put("addressLandmark", documentSnapshot2.getString("addressLandmark"));
                                         orderAddress.put("addressName", documentSnapshot2.getString("addressName"));
-                                        orderAddress.put("addressPin", documentSnapshot2.getString("addressPin"));
-                                        orderAddress.put("addressState", documentSnapshot2.getString("addressState"));
+                                        orderAddress.put("address", documentSnapshot2.getString("address"));
+                                        orderAddress.put("addressContact", documentSnapshot2.getString("addressContact"));
+                                        orderAddress.put("addressLatitude", documentSnapshot2.getString("addressLatitude"));
+                                        orderAddress.put("addressLongitude", documentSnapshot2.getString("addressLongitude"));
                                         orderAddress.put("addressID", documentSnapshot2.getId());
                                         orderRef.document(orderID).collection("Order Address").document(documentSnapshot2.getId()).set(orderAddress)
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -331,26 +332,46 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                     for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
                         if (documentSnapshot.getString("addressStatus").equals("Default")) {
                             name.setText(documentSnapshot.getString("addressName"));
-                            building.setText(documentSnapshot.getString("addressBuilding"));
-                            area.setText(documentSnapshot.getString("addressArea"));
-                            landmark.setText(documentSnapshot.getString("addressLandmark"));
-                            city.setText(documentSnapshot.getString("addressCity"));
-                            pin.setText(documentSnapshot.getString("addressPin"));
+                            address.setText(documentSnapshot.getString("address"));
+                            contact.setText(documentSnapshot.getString("addressContact"));
+                            if (documentSnapshot.getString("addressDeliveryStatus").equals("No Delivery")) {
+                                address_delivery_status.setVisibility(View.VISIBLE);
+                                delivery_charge_tv.setVisibility(View.GONE);
+                                delivery_charge.setVisibility(View.GONE);
+                                total_tv.setVisibility(View.GONE);
+                                total.setVisibility(View.GONE);
+                                placeOrderBTN.setEnabled(false);
+                            } else if (documentSnapshot.getString("addressDeliveryStatus").equals("Delivery Charge")) {
+                                address_delivery_status.setVisibility(View.GONE);
+                                delivery_charge_tv.setVisibility(View.VISIBLE);
+                                delivery_charge.setVisibility(View.VISIBLE);
+                                total_tv.setVisibility(View.VISIBLE);
+                                total.setVisibility(View.VISIBLE);
+                                placeOrderBTN.setEnabled(true);
+                                DELIVERY_CHARGE = 50.0f;
+                            } else {
+                                address_delivery_status.setVisibility(View.GONE);
+                                delivery_charge_tv.setVisibility(View.GONE);
+                                delivery_charge.setVisibility(View.GONE);
+                                total_tv.setVisibility(View.VISIBLE);
+                                total.setVisibility(View.VISIBLE);
+                                placeOrderBTN.setEnabled(true);
+                                DELIVERY_CHARGE = 0.0f;
+                            }
                             status.setText("Default");
 
                         }
                     }
                 }
+                if (dealType == 1) {
+                    loadBestOrderSummary();
+                } else if (dealType == 2) {
+                    loadNormalOrderSummary();
+                } else {
+                    checkDealType();
+                }
             }
         });
-
-        if (dealType == 1) {
-            loadBestOrderSummary();
-        } else if (dealType == 2) {
-            loadNormalOrderSummary();
-        } else {
-            checkDealType();
-        }
     }
 
     private void checkDealType() {
@@ -385,7 +406,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                     availability.setText("Currently out of stock");
                 }
                 fishNewPrice = value.getString("fishNewPrice");
-                orderTotal = String.valueOf(Float.parseFloat(fishNewPrice) * Float.parseFloat(fishQty));
+                orderTotal = String.valueOf(Float.parseFloat(fishNewPrice) * Float.parseFloat(fishQty) + DELIVERY_CHARGE);
                 price.setText("₹" + fishNewPrice);
                 qty.setText(fishQty + " KG");
                 total.setText("₹" + orderTotal);
@@ -408,7 +429,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                     availability.setText("Out of Stock");
                 }
                 fishPrice = value.getString("fishPrice");
-                orderTotal = String.valueOf(Float.parseFloat(fishPrice) * Float.parseFloat(fishQty));
+                orderTotal = String.valueOf(Float.parseFloat(fishPrice) * Float.parseFloat(fishQty) + DELIVERY_CHARGE);
                 price.setText("₹" + fishPrice);
                 qty.setText(fishQty + " KG");
                 total.setText("₹" + orderTotal);
@@ -435,22 +456,23 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     }
 
     private void initValues() {
-        fishName = findViewById(R.id.confirm_order_fish_name);
-        availability = findViewById(R.id.confirm_order_fish_availability);
-        price = findViewById(R.id.confirm_order_fish_price);
-        qty = findViewById(R.id.confirm_order_fish_qty);
-        total = findViewById(R.id.confirm_order_total);
-        name = findViewById(R.id.confirm_order_address_name);
-        building = findViewById(R.id.confirm_order_address_building);
-        area = findViewById(R.id.confirm_order_address_area);
-        landmark = findViewById(R.id.confirm_order_address_landmark);
-        city = findViewById(R.id.confirm_order_address_city);
-        pin = findViewById(R.id.confirm_order_address_pin);
-        status = findViewById(R.id.confirm_order_address_status);
+        fishName = findViewById(R.id.order_fish_name);
+        availability = findViewById(R.id.order_fish_availability);
+        price = findViewById(R.id.order_fish_price);
+        qty = findViewById(R.id.order_fish_qty);
+        total = findViewById(R.id.order_total);
+        name = findViewById(R.id.address_name);
+        address = findViewById(R.id.address);
+        contact = findViewById(R.id.address_contact);
+        address_delivery_status = findViewById(R.id.no_delivery_tv);
+        status = findViewById(R.id.address_status);
         placeOrderBTN = findViewById(R.id.confirm_order_place_order_btn);
-        optionsBTN = findViewById(R.id.confirm_order_address_options_btn);
+        optionsBTN = findViewById(R.id.address_options_btn);
         addressCard = findViewById(R.id.confirm_order_address_card);
         noAddress = findViewById(R.id.confirm_order_no_address_tv);
+        delivery_charge_tv = findViewById(R.id.order_delivery_charge_tv);
+        delivery_charge = findViewById(R.id.order_delivery_charge);
+        total_tv = findViewById(R.id.order_total_tv);
         mProgress = new ProgressDialog(this);
         mProgress.setCancelable(false);
 

@@ -42,8 +42,8 @@ public class MyAddressesActivity extends AppCompatActivity implements AdapterAdd
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private CollectionReference addressRef;
-    private ArrayList<ModelAddress> addressList = new ArrayList<>();
-    private ArrayList<String> addressOptionList = new ArrayList<>();
+    private final ArrayList<ModelAddress> addressList = new ArrayList<>();
+    private final ArrayList<String> addressOptionList = new ArrayList<>();
     private AdapterAddress mAdapter;
 
     @Override
@@ -61,7 +61,7 @@ public class MyAddressesActivity extends AppCompatActivity implements AdapterAdd
         addAddressBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MyAddressesActivity.this, AddNewAddressActivity.class));
+                startActivity(new Intent(MyAddressesActivity.this, GetLocationActivity.class));
             }
         });
     }
@@ -76,16 +76,13 @@ public class MyAddressesActivity extends AppCompatActivity implements AdapterAdd
                 addressOptionList.clear();
                 for (DocumentSnapshot addresses : value.getDocuments()) {
                     String addressName = addresses.getString("addressName");
-                    String addressBuilding = addresses.getString("addressBuilding");
-                    String addressCity = addresses.getString("addressCity");
-                    String addressLandmark = addresses.getString("addressLandmark");
-                    String addressArea = addresses.getString("addressArea");
-                    String addressPin = addresses.getString("addressPin");
-                    String addressState = addresses.getString("addressState");
+                    String address = addresses.getString("address");
                     String addressStatus = addresses.getString("addressStatus");
+                    String addressContact = addresses.getString("addressContact");
+                    String addressDeliveryStatus = addresses.getString("addressDeliveryStatus");
 
-                    ModelAddress address = new ModelAddress(addressArea, addressBuilding, addressCity, addressLandmark, addressName, addressPin, addressState, addressStatus);
-                    addressList.add(address);
+                    ModelAddress addressDetails = new ModelAddress(addressName, address, addressStatus, addressContact, addressDeliveryStatus);
+                    addressList.add(addressDetails);
                     addressOptionList.add(addresses.getId());
                 }
                 if (addressList.isEmpty()) {

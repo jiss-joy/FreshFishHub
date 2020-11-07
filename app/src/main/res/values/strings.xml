@@ -7,4 +7,5 @@
     <string name="order_delivery">Your order is out for delivery.</string>
     <string name="order_delivered">This order has been delivered to you.</string>
     <string name="order_cancelled">This order was cancelled by you.</string>
+    <string name="title_activity_get_location">Map</string>
 </resources>

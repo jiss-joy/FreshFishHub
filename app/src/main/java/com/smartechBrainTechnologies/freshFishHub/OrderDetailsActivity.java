@@ -34,8 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OrderDetailsActivity extends AppCompatActivity {
-    private TextView toolbarTitle, orderStatusLong, orderStatusShort, order_ID, time, fName, fPrice, fQty,
-            totalPrice, name, building, area, city, pin, landmark;
+    private final Map<String, Object> orderDetails = new HashMap<>();
     private LinearLayout cancelBTN, deliverBTN;
     private ProgressDialog mProgress;
 
@@ -48,7 +47,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private DatabaseReference notificationRef;
 
     private String orderID, userDeliveryCode;
-    private Map<String, Object> orderDetails = new HashMap<>();
+    private TextView toolbarTitle, orderStatusLong, orderStatusShort, order_ID, time, fName, fPrice, fQty,
+            totalPrice, name, address, contact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,16 +200,9 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
                     if (documentSnapshot.getString("addressStatus").equals("Default")) {
                         name.setText(documentSnapshot.getString("addressName"));
-                        building.setText(documentSnapshot.getString("addressBuilding"));
-                        area.setText(documentSnapshot.getString("addressArea"));
-                        if (documentSnapshot.getString("addressLandmark").equals("")) {
-                            landmark.setVisibility(View.GONE);
-                        } else {
-                            landmark.setVisibility(View.VISIBLE);
-                            landmark.setText(documentSnapshot.getString("addressLandmark"));
-                        }
-                        city.setText(documentSnapshot.getString("addressCity"));
-                        pin.setText(documentSnapshot.getString("addressPin"));
+                        address.setText(documentSnapshot.getString("address"));
+                        contact.setText(documentSnapshot.getString("addressContact"));
+
                     }
                 }
             }
@@ -285,18 +278,15 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private void initValues() {
         order_ID = findViewById(R.id.order_details_order_id);
         orderStatusLong = findViewById(R.id.order_details_status_tv);
-        orderStatusShort = findViewById(R.id.order_details_status);
-        fName = findViewById(R.id.order_details_fish_name);
-        fPrice = findViewById(R.id.order_details_order_price);
-        fQty = findViewById(R.id.order_details_qty);
-        name = findViewById(R.id.order_details_name);
-        area = findViewById(R.id.order_details_area);
-        building = findViewById(R.id.order_details_building);
-        city = findViewById(R.id.order_details_city);
-        pin = findViewById(R.id.order_details_pin);
-        landmark = findViewById(R.id.order_details_landmark);
+        orderStatusShort = findViewById(R.id.order_fish_availability);
+        fName = findViewById(R.id.order_fish_name);
+        fPrice = findViewById(R.id.order_fish_price);
+        fQty = findViewById(R.id.order_fish_qty);
+        name = findViewById(R.id.address_name);
+        address = findViewById(R.id.address);
+        contact = findViewById(R.id.address_contact);
         time = findViewById(R.id.order_details_order_time);
-        totalPrice = findViewById(R.id.order_details_total);
+        totalPrice = findViewById(R.id.order_total);
         cancelBTN = findViewById(R.id.order_details_cancel_btn);
         deliverBTN = findViewById(R.id.order_details_deliver_btn);
         mProgress = new ProgressDialog(this);

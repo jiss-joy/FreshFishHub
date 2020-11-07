@@ -14,9 +14,9 @@ import java.util.ArrayList;
 
 public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.MyViewHolder> {
 
-    private Context context;
-    private ArrayList<ModelAddress> addressList;
-    private OnOptionsClickListener onOptionsClickListener;
+    private final Context context;
+    private final ArrayList<ModelAddress> addressList;
+    private final OnOptionsClickListener onOptionsClickListener;
 
     private int mPosition;
 
@@ -36,21 +36,18 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.address_name.setText(addressList.get(position).getAddressName());
-        holder.address_building.setText(addressList.get(position).getAddressBuilding());
-        holder.address_area.setText(addressList.get(position).getAddressArea());
-        holder.address_city.setText(addressList.get(position).getAddressCity() + ",");
-        holder.address_pin.setText(addressList.get(position).getAddressPin());
-        if (addressList.get(position).getAddressLandmark().equals("")) {
-            holder.address_landmark.setVisibility(View.GONE);
+        holder.address.setText(addressList.get(position).getAddress());
+        holder.address_contact.setText(addressList.get(position).getAddressContact());
+        if (addressList.get(position).getAddressDeliveryStatus().equals("No Delivery")) {
+            holder.no_delviery.setVisibility(View.VISIBLE);
         } else {
-            holder.address_landmark.setText(addressList.get(position).getAddressLandmark());
+            holder.no_delviery.setVisibility(View.GONE);
         }
         if (addressList.get(position).getAddressStatus().equals("Default")) {
             holder.address_status.setText(addressList.get(position).getAddressStatus());
         } else {
             holder.address_status.setVisibility(View.GONE);
         }
-
     }
 
     @Override
@@ -66,8 +63,7 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView address_name, address_building, address_area, address_city, address_landmark,
-                address_state, address_pin, address_status;
+        TextView address_name, address_contact, address, address_status, no_delviery;
 
         ImageButton optionsBTN;
 
@@ -75,13 +71,11 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.MyViewHo
         public MyViewHolder(@NonNull View itemView, OnOptionsClickListener onOptionsClickListener) {
             super(itemView);
             address_name = itemView.findViewById(R.id.address_name);
-            address_building = itemView.findViewById(R.id.address_building);
-            address_area = itemView.findViewById(R.id.address_area);
-            address_city = itemView.findViewById(R.id.address_city);
-            address_landmark = itemView.findViewById(R.id.address_landmark);
-            address_state = itemView.findViewById(R.id.address_state);
-            address_pin = itemView.findViewById(R.id.address_pin);
+            address_contact = itemView.findViewById(R.id.address_contact);
+            address = itemView.findViewById(R.id.address);
             address_status = itemView.findViewById(R.id.address_status);
+            no_delviery = itemView.findViewById(R.id.no_delivery_tv);
+            no_delviery.setVisibility(View.GONE);
             optionsBTN = itemView.findViewById(R.id.address_options_btn);
 
             optionsBTN.setOnClickListener(this);

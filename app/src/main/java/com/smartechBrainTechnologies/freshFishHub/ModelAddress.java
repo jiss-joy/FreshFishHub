@@ -2,60 +2,40 @@ package com.smartechBrainTechnologies.freshFishHub;
 
 public class ModelAddress {
 
-    private String addressArea;
-    private String addressBuilding;
-    private String addressCity;
-    private String addressLandmark;
     private String addressName;
-    private String addressPin;
-    private String addressState;
+    private String address;
     private String addressStatus;
+    private String addressContact;
+    private String addressDeliveryStatus;
 
     public ModelAddress() {
     }
 
-    public ModelAddress(String addressArea, String addressBuilding, String addressCity,
-                        String addressLandmark, String addressName, String addressPin, String addressState, String addressStatus) {
-        this.addressArea = addressArea;
-        this.addressBuilding = addressBuilding;
-        this.addressCity = addressCity;
-        this.addressLandmark = addressLandmark;
+    public ModelAddress(String addressName, String address, String addressStatus, String addressContact, String addressDeliveryStatus) {
         this.addressName = addressName;
-        this.addressPin = addressPin;
-        this.addressState = addressState;
+        this.address = address;
         this.addressStatus = addressStatus;
-    }
-
-
-    public String getAddressArea() {
-        return addressArea;
-    }
-
-    public String getAddressBuilding() {
-        return addressBuilding;
-    }
-
-    public String getAddressCity() {
-        return addressCity;
-    }
-
-    public String getAddressLandmark() {
-        return addressLandmark;
+        this.addressContact = addressContact;
+        this.addressDeliveryStatus = addressDeliveryStatus;
     }
 
     public String getAddressName() {
         return addressName;
     }
 
-    public String getAddressPin() {
-        return addressPin;
-    }
-
-    public String getAddressState() {
-        return addressState;
+    public String getAddress() {
+        return address;
     }
 
     public String getAddressStatus() {
         return addressStatus;
+    }
+
+    public String getAddressContact() {
+        return addressContact;
+    }
+
+    public String getAddressDeliveryStatus() {
+        return addressDeliveryStatus;
     }
 }

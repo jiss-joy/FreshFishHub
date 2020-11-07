@@ -62,21 +62,6 @@
                 android:paddingVertical="10sp"
                 android:textColorHint="@color/colorSecondary" />
 
-            <EditText
-                android:id="@+id/edit_profile_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8sp"
-                android:layout_marginTop="10sp"
-                android:background="@drawable/custom_field"
-                android:fontFamily="@font/ubuntu"
-                android:gravity="center"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:paddingHorizontal="20sp"
-                android:paddingVertical="10sp"
-                android:textColorHint="@color/colorSecondary" />
-
             <TextView
                 android:id="@+id/edit_profile_warning_tv"
                 android:layout_width="wrap_content"

@@ -132,45 +132,6 @@
                         android:textColor="@color/color_gray"
                         android:textSize="16sp" />
 
-                    <View
-                        android:id="@+id/profile_view_3"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_below="@id/details_tv3"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_marginTop="5sp"
-                        android:background="@color/blue_white" />
-
-
-                    <TextView
-                        android:id="@+id/details_tv4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/profile_view_3"
-                        android:layout_marginStart="10sp"
-                        android:layout_marginTop="15sp"
-                        android:layout_marginBottom="15sp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:text="Email"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/profile_email"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/profile_view_3"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="15sp"
-                        android:layout_marginEnd="10sp"
-                        android:layout_marginBottom="15sp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:text="Email"
-                        android:textColor="@color/color_gray"
-                        android:textSize="16sp" />
-
                 </RelativeLayout>
 
 

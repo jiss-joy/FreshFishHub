@@ -9,14 +9,22 @@ android {
 
     defaultConfig {
         applicationId "com.smartechBrainTechnologies.freshFishHub"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
-        versionCode 6
-        versionName "1.0.1"
+        versionCode 7
+        versionName "1.1.1"
         multiDexEnabled true
+        resConfigs ("en", "xxhdpi")
 
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            ext.enableCrashlytics = false
+            ext.alwaysUpdateBuildId = false
+        }
     }
 
     buildTypes {
@@ -31,23 +39,26 @@ dependencies {
     //Android
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
     implementation 'com.google.android.material:material:1.2.1'
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.libraries.places:places:2.4.0'
 
 
     //Firebase
-    implementation 'com.google.firebase:firebase-analytics:17.5.0'
+    implementation 'com.google.firebase:firebase-analytics:17.6.0'
     implementation 'com.google.firebase:firebase-auth:19.4.0'
-    implementation 'com.google.firebase:firebase-firestore:21.6.0'
+    implementation 'com.google.firebase:firebase-firestore:21.7.1'
     implementation 'com.google.firebase:firebase-storage:19.2.0'
-    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
-    implementation 'com.google.firebase:firebase-perf:19.0.8'
-    implementation 'com.google.firebase:firebase-messaging:20.2.4'
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+    implementation 'com.google.firebase:firebase-perf:19.0.9'
+    implementation 'com.google.firebase:firebase-messaging:20.3.0'
     implementation 'com.google.firebase:firebase-functions:19.1.0'
-    implementation 'com.google.firebase:firebase-database:19.4.0'
+    implementation 'com.google.firebase:firebase-database:19.5.1'
 
 
     //Foreign
@@ -55,10 +66,10 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.jackandphantom.android:circularimageview:1.2.0'
     implementation 'com.github.arimorty:floatingsearchview:2.1.1'
-    implementation "com.airbnb.android:lottie:$lottieVersion"
+    implementation "com.airbnb.android:lottie:3.4.4"
 
     //Testing
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 

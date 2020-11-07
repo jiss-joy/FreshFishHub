@@ -57,6 +57,12 @@ public class VerifySignInActivity extends AppCompatActivity {
 
         sendOTP();
 
+        resendOTP();
+
+    }
+
+    private void resendOTP() {
+
     }
 
     private void sendOTP() {
@@ -93,10 +99,12 @@ public class VerifySignInActivity extends AppCompatActivity {
                                     mProgress.setMessage("Authenticating...");
                                     mProgress.show();
                                     PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(sentOTP, userOTP);
+
                                     signInUser(phoneAuthCredential);
                                 }
                             }
                         });
+
                     }
                 });
     }

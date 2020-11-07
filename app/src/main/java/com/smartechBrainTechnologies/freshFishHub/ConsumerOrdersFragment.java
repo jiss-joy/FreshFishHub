@@ -43,7 +43,7 @@ public class ConsumerOrdersFragment extends Fragment implements AdapterShortOrde
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private CollectionReference orderRef;
-    private ArrayList<ModelShortOrder> orderList = new ArrayList<>();
+    private final ArrayList<ModelShortOrder> orderList = new ArrayList<>();
     private AdapterShortOrder mAdapter;
 
     @Nullable
@@ -56,7 +56,7 @@ public class ConsumerOrdersFragment extends Fragment implements AdapterShortOrde
         mProgress.setMessage("Please wait...");
         mProgress.show();
 
-        toolbarTitle = view.findViewById(R.id.toolbar_title);
+        toolbarTitle = (TextView) view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Your Orders");
 
         initValues(view);
@@ -96,14 +96,13 @@ public class ConsumerOrdersFragment extends Fragment implements AdapterShortOrde
                     noOrderTV.setText("You do not have any order.\nPlease place a new order in the market now!");
                     noOrderImage.setVisibility(View.VISIBLE);
                     noOrderTV.setVisibility(View.VISIBLE);
-                    mProgress.dismiss();
                 } else {
                     consumerOrderRecycler.setVisibility(View.VISIBLE);
                     mAdapter = new AdapterShortOrder(getContext(), orderList, ConsumerOrdersFragment.this);
                     consumerOrderRecycler.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
-                    mProgress.dismiss();
                 }
+                mProgress.dismiss();
             }
         });
     }

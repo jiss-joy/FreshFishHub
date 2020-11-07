@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -23,7 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private EditText phoneNumber_et, email_et, name_et;
+    private EditText phoneNumber_et, name_et;
     private ExtendedFloatingActionButton next_btn;
     private TextView warning_tv;
     private ProgressDialog mProgress;
@@ -55,14 +54,6 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        email_et.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                warning_tv.setVisibility(View.GONE);
-                return false;
-            }
-        });
-
         name_et.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -82,23 +73,14 @@ public class SignUpActivity extends AppCompatActivity {
             warning_tv.setText("PLEASE ENTER A VALID PHONE NUMBER");
             warning_tv.setVisibility(View.VISIBLE);
         } else {
-            email = email_et.getText().toString();
-            if (email.isEmpty()) {
-                warning_tv.setText("PLEASE ENTER EMAIL ID");
-                warning_tv.setVisibility(View.VISIBLE);
-            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                warning_tv.setText("PLEASE ENTER A VALID EMAIL ID");
+            name = name_et.getText().toString();
+            if (name.isEmpty()) {
+                warning_tv.setText("PLEASE ENTER NAME");
                 warning_tv.setVisibility(View.VISIBLE);
             } else {
-                name = name_et.getText().toString();
-                if (name.isEmpty()) {
-                    warning_tv.setText("PLEASE ENTER NAME");
-                    warning_tv.setVisibility(View.VISIBLE);
-                } else {
-                    mProgress.setMessage("Verifying Number...");
-                    mProgress.show();
-                    checkNumberWithDatabase();
-                }
+                mProgress.setMessage("Verifying Number...");
+                mProgress.show();
+                checkNumberWithDatabase();
             }
         }
     }
@@ -132,7 +114,6 @@ public class SignUpActivity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(SignUpActivity.this, VerifyOtpActivity.class);
                     intent.putExtra("PHONE NUMBER", phoneNumber);
-                    intent.putExtra("EMAIL", email);
                     intent.putExtra("NAME", name);
                     intent.putExtra("USER TYPE", "Consumer");
 
@@ -147,7 +128,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void initValues() {
         phoneNumber_et = findViewById(R.id.sign_up_phone_number);
-        email_et = findViewById(R.id.sign_up_email);
         name_et = findViewById(R.id.sign_up_name);
         next_btn = findViewById(R.id.sign_up_next_btn);
         warning_tv = findViewById(R.id.signup_warning_tv);
